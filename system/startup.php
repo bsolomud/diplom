@@ -78,4 +78,5 @@ require_once(DIR_SYSTEM . 'library/response.php');
 require_once(DIR_SYSTEM . 'library/session.php');
 require_once(DIR_SYSTEM . 'library/template.php');
 require_once(DIR_SYSTEM . 'library/user.php');
+require_once(DIR_SYSTEM . 'library/youtube.php');
 ?>

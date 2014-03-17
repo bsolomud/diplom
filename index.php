@@ -74,6 +74,8 @@ $session = new Session();
 $registry->set('session', $session);
 // User
 $registry->set('user', new User($registry));
+// Youtube
+$registry->set('youtube', new Youtube($registry));
 // Language Detection
 $languages = array();
 $query = $db->query("SELECT * FROM `" . DB_PREFIX . "language` WHERE status = '1'"); 
