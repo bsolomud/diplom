@@ -6,7 +6,7 @@
 
 		public function __construct($registry) {
 			$this->registry = $registry;
-			$this->load->helper("json");
+			$this->registry->get("load")->helper("json");
 		}
 		// Youtube get video list
 		public function getVideoList($key, $numb = 25) {

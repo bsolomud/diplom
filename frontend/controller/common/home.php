@@ -4,8 +4,6 @@ class ControllerCommonHome extends Controller {
 		// Load libraries
 		$this->language->load("common/home");
 		$this->load->model("tool/youtube");
-		// Load helpers
-		$this->load->helper("youtube");
 		// Setup document data
 		$this->document->setTitle($this->config->get('config_title'));
 		$this->document->setDescription($this->config->get('config_meta_description'));

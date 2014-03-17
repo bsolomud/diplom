@@ -3,7 +3,8 @@
 	<li>Rename file "config.php.sample" to "config.php"
 		<ul>
 			<li>Rename constants 'HTTP_SERVER' and 'HTTPS_SERVER' to you host.</li>
-			<li>Setup database configurations</li>
+			<li>Setup database configurations.</li>
+			<li>Install Curl on server.</li>
 		</ul>
 	</li>
 	<li>Import dyplom.sql to you database.</li>

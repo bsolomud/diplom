@@ -106,7 +106,9 @@ class ControllerCommonHeader extends Controller {
 			$this->data['message']['info'] = $this->session->data['info'];
 			unset($this->session->data['info']);
 		}
+		$this->data['keyword'] = isset($this->request->get['keyword']) ? $this->request->get['keyword'] : '';
 
+		$this->data['config_template'] = $this->config->get('config_template');
 		// Rendering...
 		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/common/header.tpl'))
 			$this->template = $this->config->get('config_template') . '/template/common/header.tpl';
