@@ -13,7 +13,7 @@ class ControllerCommonHome extends Controller {
 			$this->template = $this->config->get('config_template') . '/template/common/home.tpl';
 		else
 			$this->template = 'default/template/common/home.tpl';
-		$this->children = array("common/header", "common/footer");
+		$this->children = array("common/header", "common/column_left", "common/footer");
 		$this->response->setOutput($this->render());
 	}
 }

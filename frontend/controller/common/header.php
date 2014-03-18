@@ -1,7 +1,7 @@
 <?php   
 class ControllerCommonHeader extends Controller {
 	protected function index() {
-		// Loading libraries
+		// Loadign libraries
 		$this->language->load('common/header');
 		// Base HTTP url
 		if (isset($this->request->server['HTTPS']) && (($this->request->server['HTTPS'] == 'on') || ($this->request->server['HTTPS'] == '1')))
@@ -44,51 +44,30 @@ class ControllerCommonHeader extends Controller {
 		$this->data['login_action'] = $this->url->link('common/login');
 		// If user is signed in
 		if($this->user->isLogged()) {
-			$this->data['is_logged'] = true;
-			// If user is admin or usual user
-			if($this->user->has_permission('modify', 'user/user')) {
-				$this->data['is_admin'] = true;
-				$this->data['admin'] = array(
-					'users'	=> array(
-						'text'	=> $this->language->get('text_users'),
-						'href'	=> $this->url->link('user/user')
-					),
-					'groups'	=> array(
-						'text'	=> $this->language->get('text_groups'),
-						'href'	=> $this->url->link('user/group')
-					),
-					'settings'	=> array(
-						'text'	=> $this->language->get('text_settings'),
-						'href'	=> $this->url->link('setting/setting')
-					),
-				);
-			} else
-				$this->data['is_admin'] = false;
-			$this->data['navbar'] = array(
-				'profile'	=> array(
-					'text'	=> $this->language->get('text_user_profile'),
-					'href'	=> $this->url->link('user/user', 'user_id=' . $this->user->getUserId())
+			$this->data['navigation'] = array(
+				array(
+					"text"	=> $this->language->get("text_signout"),
+					"href"	=> $this->url->link("account/account/signout"),
 				),
-				'singout'	=> array(
-					'text'	=> $this->language->get('text_singout'),
-					'href'	=> $this->url->link('common/logout')
+				array(
+					"text"	=> $this->language->get("text_account"),
+					"href"	=> $this->url->link("account/account")
 				)
 			);
 		} else {
-			$this->data['navbar'] = array(
-				'singin'	=> array(
-					'text'	=> $this->language->get('text_singin'),
-					'href'	=> $this->url->link('user/user', 'user_id=' . $this->user->getUserId())
+			$this->data['navigation'] = array(
+				array(
+					"text"	=> $this->language->get("text_signup"),
+					"href"	=> $this->url->link("account/account/signup"),
 				),
-				'singup'	=> array(
-					'text'	=> $this->language->get('text_singup'),
-					'href'	=> $this->url->link('common/logout')
-				)
+				array(
+					"text"	=> $this->language->get("text_signin"),
+					"href"	=> $this->url->link("account/account/signin"),
+				),
 			);
-			$this->data['is_logged'] = false;
 		}
 
-		// Retrieving session actions data
+		// Retrievign session actions data
 		$this->data['message'] = array();
 		if(isset($this->session->data['success'])) {
 			$this->data['message']['success'] = $this->session->data['success'];
@@ -98,9 +77,9 @@ class ControllerCommonHeader extends Controller {
 			$this->data['message']['notice'] = $this->session->data['notice'];
 			unset($this->session->data['notice']);
 		}
-		if(isset($this->session->data['warning'])) {
-			$this->data['message']['warning'] = $this->session->data['warning'];
-			unset($this->session->data['warning']);
+		if(isset($this->session->data['warnign'])) {
+			$this->data['message']['warnign'] = $this->session->data['warnign'];
+			unset($this->session->data['warnign']);
 		}
 		if(isset($this->session->data['info'])) {
 			$this->data['message']['info'] = $this->session->data['info'];
@@ -109,7 +88,7 @@ class ControllerCommonHeader extends Controller {
 		$this->data['keyword'] = isset($this->request->get['keyword']) ? $this->request->get['keyword'] : '';
 
 		$this->data['config_template'] = $this->config->get('config_template');
-		// Rendering...
+		// Renderign...
 		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/common/header.tpl'))
 			$this->template = $this->config->get('config_template') . '/template/common/header.tpl';
 		else

@@ -1,5 +1,6 @@
 <?php echo $header; ?>
-	<div class="conteiner">
-		
+	<?php echo $column_left; ?>
+	<div class="content-wrapper">
+		Content goes here
 	</div>
 <?php echo $footer; ?>
