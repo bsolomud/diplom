@@ -58,15 +58,15 @@ a:hover {
 }
 .message span.warning {
 	box-shadow:inset 0px 0px 10px #a1004c;
-	background:url("../image/success.png") 98% center no-repeat;
+	background:url("../image/error.png") 98% center no-repeat;
 }
 .message span.notice {
 	box-shadow:inset 0px 0px 10px #ff8200;
-	background:url("../image/success.png") 98% center no-repeat;
+	background:url("../image/notice.png") 98% center no-repeat;
 }
 .message span.info {
 	box-shadow:inset 0px 0px 10px #000098;
-	background:url("../image/success.png") 98% center no-repeat;
+	background:url("../image/info.png") 98% center no-repeat;
 }
 .header-conteiner .clock {
 	width:350px;
@@ -177,13 +177,18 @@ a:hover {
 	overflow:hidden;
 }
 .column-wrapper {
-	margin:0 10px 0 0;
-	padding:5px;
-	width:90px;
+	margin:0 5px 0 0;
+	padding:0;
+	min-width:90px;
 	overflow:hidden;
 	float:left;
 	background:rgba(0, 0, 0, 0.7);
-	border-radius:5px;
+	-webkit-border-top-left-radius: 5px;
+	-webkit-border-bottom-left-radius: 5px;
+	-moz-border-radius-topleft: 5px;
+	-moz-border-radius-bottomleft: 5px;
+	border-top-left-radius: 5px;
+	border-bottom-left-radius: 5px;
 }
 .column-wrapper ul {
 	display:block;
@@ -194,30 +199,47 @@ a:hover {
 }
 .column-wrapper ul li {
 	padding:0;
-	margin:5px 0;
+	margin:0;
+	overflow:hidden;
 }
 .column-wrapper ul li a {
-	display:block;
+    display:inline-table;
+    vertical-align:middle;
+    line-height:90px;
 	padding:5px 0;
-	height:50px;
-	width:100%;
-	text-align:right;
+	margin:0;
+	height:90px;
+	width:90px;
+	overflow:hidden;
+	word-wrap:break-word;
+	text-align:center;
+	-webkit-transform: rotate(-45deg);   
+	-moz-transform: rotate(-45deg);
+	-ms-transform: rotate(-45deg);
+	-o-transform: rotate(-45deg);
+	transform: rotate(-45deg);
+	font-weight:700;
 }
 .column-wrapper ul li a:hover {
-	text-decoration:underline;
 	text-shadow:0px 0px 3px #ccc;
-}
-.column-wrapper ul li a span {display:none;}
-.column-maxi {width:140px;}
-.column-maxi ul li a span {display:block;}
-.column-switcher {
-	border:1px solid red;
-	width:10px;
-	height:10px;
-	position:absolute;
-	margin:0;
-	padding:0;
+	transform:none;
+	background:rgba(200,200,200,0.1);
+	width:100%;
+	text-align:center;
 	border-radius:5px;
+	margin:0;
+}
+.content-wrapper {
+	overflow:hidden;
+	margin:0;
+	padding:5px;
+	background:rgba(0,0,0, 0.7);
+	-webkit-border-top-right-radius: 5px;
+	-webkit-border-bottom-right-radius: 5px;
+	-moz-border-radius-topright: 5px;
+	-moz-border-radius-bottomright: 5px;
+	border-top-right-radius: 5px;
+	border-bottom-right-radius: 5px;
 }
 /*		Frames	*/
 @-webkit-keyframes clocksep {
