@@ -3,7 +3,6 @@ class ControllerCommonHome extends Controller {
 	public function index() {
 		// Load libraries
 		$this->language->load("common/home");
-		$this->load->model("tool/image");
 		// Setup document data
 		$this->document->setTitle($this->config->get('config_title'));
 		$this->document->setDescription($this->config->get('config_meta_description'));
@@ -16,13 +15,13 @@ class ControllerCommonHome extends Controller {
 				$this->data['results'][$video['id']["videoId"]] = array(
 					'name'			=> $video["snippet"]["title"],
 					'description'	=> $video["snippet"]["description"],
-					'publishedAt'	=> date($this->config->get('published_format'), strtotime($video["snippet"]["publishedAt"])),
-					'url'			=> $this->url->link('video/video', 'video=' . $video['id']["videoId"])
+					'publishedAt'	=> date($this->language->get('publish_format'), strtotime($video["snippet"]["publishedAt"])),
+					'href'			=> $this->url->link('video/video', 'video=' . $video['id']["videoId"])
 				);
-				foreach($video["snippet"]["thumbnails"]["high"] as $thumb)
-					$this->data['results'][$video['id']["videoId"]]["thumbnails"][] = $this->model_tool_image->resize($thumb['url'], $this->config->get("video_width"), $this->config->get("video_height"));
+				$cookie[] = $video['id']['videoId'];
+				$this->data['results'][$video['id']["videoId"]]["thumbnail"] = $video['snippet']['thumbnails']['medium']['url'];
 			}
-			setcookie('videolist', json_encode($this->data['results']));
+			setcookie('videolist', json_encode($cookie), time() + (60*60*24));
 		} else
 			$this->data['text_error'] = $list->error;
 
