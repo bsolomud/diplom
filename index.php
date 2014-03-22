@@ -104,12 +104,11 @@ else
 	$code = $config->get('config_language');
 if (!isset($session->data['language']) || $session->data['language'] != $code)
 	$session->data['language'] = $code;
-
 if (!isset($request->cookie['language']) || $request->cookie['language'] != $code)	  
-	setcookie('language', $code, time() + 60 * 60 * 24 * 30, '/', $request->server['HTTP_HOST']);			
+	setcookie('language', $code, time() + 60 * 60 * 24 * 30, '/', $request->server['HTTP_HOST']);
 $config->set('config_language_id', $languages[$code]['language_id']);
 $config->set('config_language', $languages[$code]['code']);
-// Language	
+// Language
 $language = new Language($languages[$code]['directory']);
 $language->load($languages[$code]['filename']);
 $registry->set('language', $language);

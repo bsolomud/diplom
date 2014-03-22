@@ -25,8 +25,7 @@ class Language {
 			return $this->data;
 		}
 
-		$file = DIR_LANGUAGE . $this->default . '/' . $filename . '.php';
-
+		$file = DIR_LANGUAGE . $this->default . '/' . $this->default . '.php';
 		if (file_exists($file)) {
 			$_ = array();
 
@@ -35,10 +34,8 @@ class Language {
 			$this->data = array_merge($this->data, $_);
 
 			return $this->data;
-		} else {
+		} else
 			trigger_error('Error: Could not load language ' . $filename . '!');
-		//	exit();
-		}
 	}
 }
 ?>

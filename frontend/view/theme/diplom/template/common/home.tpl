@@ -1,6 +1,9 @@
 <?php echo $header; ?>
 	<?php echo $column_left; ?>
 	<div class="content-wrapper">
+	<?php if(isset($text_error)) { ?>
+		<h2 class="empty-page"><?php echo $text_error; ?></h2>
+	<?php } else { ?>
 		<?php $counter = 0; $total = count($results); ?>
 		<table class="video-box" cellspacing="0" cellpadding="0">
 		<?php for($i=1;$i<=$total / 3;$i++) : ?>
@@ -19,6 +22,8 @@
 			</tr>
 		<?php endfor; ?>
 		</table>
+		<div id="pagination" class="pagination"><?php echo $pagination; ?></div>
+		<?php } ?>
 	</div>
 	<script type="text/javascript">
 	$(function(){

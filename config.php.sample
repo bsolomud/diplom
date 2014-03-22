@@ -8,7 +8,7 @@ define('HTTPS_SERVER', 'https://you.host/');
 // DIR
 define('DIR_SEP', DIRECTORY_SEPARATOR);
 $directory = realpath(dirname(__FILE__));
-define('DIR_APPLICATION', $directory . DIR_SEP . 'catalog' . DIR_SEP);
+define('DIR_APPLICATION', $directory . DIR_SEP . 'frontend' . DIR_SEP);
 define('DIR_SYSTEM', $directory . DIR_SEP . 'system' . DIR_SEP);
 define('DIR_DATABASE', DIR_SYSTEM . 'database' . DIR_SEP);
 define('DIR_LANGUAGE', DIR_APPLICATION . 'language' . DIR_SEP);
