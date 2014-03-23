@@ -32,7 +32,7 @@ class ControllerCommonHome extends Controller {
 				);
 			}
 			$total = $totalstoredVideoList;
-		} elseif(!$list->error) {
+		} elseif($list && !$list->error) {
 			foreach($list->videos as $video) {
 				$this->data['results'][$video['id']["videoId"]] = array(
 					'name'			=> $video["snippet"]["title"],
@@ -44,8 +44,10 @@ class ControllerCommonHome extends Controller {
 				$this->model_video_video->saveVideoIfNotExists($video['id']["videoId"], $video);
 			}
 			$total = count($this->data['results']);
-		} else
-			$this->data['text_error'] = $list->error;
+		} else {
+			$this->data['text_error'] = $this->language->get("error_empty_page");
+			$this->data['error_request'] = $list->error;
+		}
 		
 		$pagination = new Pagination();
 		$pagination->total = $total;

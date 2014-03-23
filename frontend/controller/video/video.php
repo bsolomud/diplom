@@ -13,6 +13,8 @@
 				$this->session->data['warning'] = $this->language->get("error_not_found");
 				$this->response->redirect($this->url->link('common/home'));
 			}
+			$start = isset($this->request->get['start']) ? $this->request->get['start'] : 0;
+
 			$this->data['video'] = array(
 				'name'			=> $video->row['name'],
 				'video_id'		=> $video->row['video_id'],
