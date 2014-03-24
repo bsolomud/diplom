@@ -8,7 +8,7 @@
 				<td class="form-input">
 					<input type="text" name="username" value="<?php echo $username; ?>" placeholder="<?php echo $placeholder_username; ?>" />
 				</td>
-				<td class="form-info"><span class="notice"><?php if($valid_username) { echo $valid_username; } else { echo $info_username; } ?></span></td>
+				<td class="form-info"><?php if($valid_username) { ?><span class="error"><?php echo $valid_username; ?></span><?php } else { ?><span class="notice"><?php echo $info_username; ?></span><?php } ?></td>
 			</tr>
 			<tr>
 				<td class="form-label"><?php echo $label_email; ?></td>
@@ -22,17 +22,17 @@
 				<td class="form-input">
 					<input type="password" name="password" value="" placeholder="<?php echo $placeholder_password; ?>" />
 				</td>
-				<td class="form-info"><span class="notice"><?php if($valid_password) { echo $valid_password; } else { echo $info_password; } ?></span></td>
+				<td class="form-info"><?php if($valid_password) { ?><span class="error"><?php echo $valid_password; ?><?php } else { ?><span class="notice"><?php echo $info_password; ?></span><?php } ?></td>
 			</tr>
 			<tr<?php if($valid_password_confirm) : ?> class="warning"<?php endif; ?>>
 				<td class="form-label"><?php echo $label_password_confirm; ?></td>
 				<td class="form-input">
 					<input type="password" name="password_confirm" value="" placeholder="<?php echo $placeholder_password_confirm; ?>" />
 				</td>
-				<td class="form-info"><span class="notice"><?php if($valid_password_confirm) { echo $valid_password_confirm; } else { echo $info_password_confirm; } ?></span></td>
+				<td class="form-info"><?php if($valid_password_confirm) { ?><span class="error"><?php echo $valid_password_confirm; ?></span><?php } else { ?><span class="notice"><?php echo $info_password_confirm; ?></span><?php } ?></td>
 			</tr>
 			<tr>
-				<td class="form-submit"><input type="submit" value="<?php echo $submit; ?>" /></td>
+				<td colspan="3" class="form-submit"><input type="submit" value="<?php echo $submit; ?>" /></td>
 			</tr>
 		</table>
 		</form>
