@@ -52,19 +52,19 @@ a:hover {
 	font-size:11pt;
 }
 .message span:hover {cursor:pointer;}
-.message span.success {
+.success {
 	box-shadow:inset 0px 0px 10px #00d700;
 	background:url("../image/success.png") 98% center no-repeat;
 }
-.message span.warning {
+.warning {
 	box-shadow:inset 0px 0px 10px #a1004c;
 	background:url("../image/error.png") 98% center no-repeat;
 }
-.message span.notice {
+.notice {
 	box-shadow:inset 0px 0px 10px #ff8200;
 	background:url("../image/notice.png") 98% center no-repeat;
 }
-.message span.info {
+.info {
 	box-shadow:inset 0px 0px 10px #000098;
 	background:url("../image/info.png") 98% center no-repeat;
 }
@@ -280,6 +280,43 @@ a:hover {
 	text-align:center;
 	margin:20px 0;
 	padding:10px 0 300px;
+}
+/*		Signup form	*/
+.signup-form {
+	margin:0;
+	padding:0;
+}
+.signup-form table {
+	border:none;
+	padding:0;
+	margin:0;
+}
+.signup-form table tr td {
+	color:#fff;
+	padding:15px 10px;
+	border-radius:5px;
+}
+.signup-form table tr td.form-label {
+	width:200px;
+}
+.signup-form table tr td.form-input {
+	width:250px;
+	text-align:center;
+}
+.signup-form table tr td.form-input input {
+	padding:5px;
+	color:#000;
+	font-size:10pt;
+	width:95%;
+}
+.signup-form table tr td.form-info {
+	font-size:8pt;
+}
+.signup-form table tr td.form-info span {
+	display:block;
+	padding-right:30px;
+	padding:10px 30px 10px 10px;
+	border-radius:5px;
 }
 /*		Frames	*/
 @-webkit-keyframes clocksep {
