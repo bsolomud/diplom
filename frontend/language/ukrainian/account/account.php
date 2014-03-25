@@ -1,6 +1,8 @@
 <?php
 // Heading
-$_["heading_title"]					= 'Реєстрація';
+$_["heading_account"]				= 'Кабінет %s';
+$_["heading_signup"]				= 'Реєстрація';
+$_["heading_signin"]				= 'Авторизація';
 // Message
 $_["success_signup"]				= 'Ви успішно зареєструвалися, вітаємо!';
 $_["success_signin"]				= 'Ви успішно авторизувалися!';
@@ -11,6 +13,7 @@ $_["label_password"]				= 'Пароль:';
 $_["label_password_confirm"] 		= 'Підвердження поролю:';
 $_["label_submit"]					= 'Відправити';
 $_["label_signin"]					= 'Автоматично увійти в систему?';
+$_["label_friends"]					= 'Мої друзі:';
 // Form placeholders
 $_["placeholder_username"]			= 'Богдан';
 $_["placeholder_email"]				= 'bogdan@mybox.ua';

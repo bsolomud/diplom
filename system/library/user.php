@@ -21,9 +21,6 @@ class User {
 					foreach ($permissions as $key => $value)
 						$this->permission[$key] = $value;
 				}
-				$friesnds = $this->db->query("SELECT `friend_id` FROM `" . DB_PREFIX . "user_friend` WHERE `user_id`=" . $this->get("user_id"));
-				foreach($friesnds->rows as $friend)
-					$this->data["friends"][] = $friend;
 			} else
 				$this->signout();
 		}
@@ -35,21 +32,12 @@ class User {
 			$this->session->data['user_id'] = $user_query->row['user_id'];
 
 			$this->data["user_id"] = $user_query->row['user_id'];
-			$this->data["username"] = $user_query->row['username'];
-			$this->data["ip"] = $user_query->row['ip'];
-			$this->data["email"] = $user_query->row['email'];
-			$this->data["created_at"] = $user_query->row['created_at'];
-			$this->data["updated_at"] = $user_query->row['updated_at'];
-
 			$user_group_query = $this->db->query("SELECT permission FROM " . DB_PREFIX . "user_group WHERE user_group_id = '" . (int)$user_query->row['user_group_id'] . "'");
 			$permissions = unserialize($user_group_query->row['permission']);
 			if (is_array($permissions)) {
 				foreach ($permissions as $key => $value)
 					$this->permission[$key] = $value;
 			}
-			$friesnds = $this->db->query("SELECT `friend_id` FROM `" . DB_PREFIX . "user_friend` WHERE `user_id`=" . $this->get("user_id"));
-			foreach($friesnds->rows as $friend)
-				$this->data["friends"][] = $friend;
 			return true;
 		} else
 			return false;

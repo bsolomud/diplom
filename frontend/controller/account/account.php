@@ -3,7 +3,48 @@
 		protected $error = array();
 
 		public function index() {
-
+			$this->language->load("account/account");
+			$this->load->model("user/user");
+			// Check if user not authorized
+			if(!$this->user->signedIn()) {
+				$this->session->data['warning'] = $this->langauge->get("error_signedin");
+				$this->response->redirect($this->url->link("account/account/signin"));
+			}
+			// Handle form
+			if($this->request->server["REQUEST_METHOD"] == "POST" && $this->validate()) {
+				echo '<pre>'; print_r($this->request->post); echo '</pre>';exit;
+			}
+			$userData = $this->model_user_user->getUserData($this->user->get("user_id"));
+			$this->document->setTitle(sprintf($this->language->get("heading_account"), $userData["username"]));
+			// Users list
+			$this->data["users"] = $this->model_user_user->getUsersList($this->user->get("user_id"));
+			// Form
+			$this->data["action"] = $this->url->link("account/account");
+			// Form labels
+			$this->data["label_username"]			= $this->language->get("label_username");
+			$this->data["label_password"] 			= $this->language->get("label_password");
+			$this->data["label_password_confirm"]	= $this->language->get("label_password_confirm");
+			$this->data["label_friends"]			= $this->language->get("label_friends");
+			$this->data["label_submit"]				= $this->language->get("label_submit");
+			$this->data["label_email"]				= $this->language->get("label_email");
+			// Form values
+			$this->data["username"] = $userData["username"];
+			$this->data["email"]    = isset($this->request->post["email"]) ? $this->request->post["email"] : $userData["email"];
+			$this->data["friends"]  = isset($this->request->post["friends"]) ? $this->request->post["friends"] : $userData["friends"];
+			$this->data["password"] = "";
+			$this->data["password_confirm"] = "";
+			$this->data["created_at"]	= $userData["created_at"];
+			// Form validates
+			$this->data["valid_email"]    = isset($this->error["email"]) ? $this->error["email"] : false;
+			$this->data["valid_password"] = isset($this->error["password"]) ? $this->error["password"] : false;
+			$this->data["valid_password_confirm"] = isset($this->error["password_confirm"]) ? $this->error["password_confirm"] : false;
+			// Rendering...
+			if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/account/account.tpl'))
+				$this->template = $this->config->get('config_template') . '/template/account/account.tpl';
+			else
+				$this->template = 'default/template/account/account.tpl';
+			$this->children = array("common/header", "common/column_left", "common/footer");
+			$this->response->setOutput($this->render());
 		}
 		public function signup() {
 			$this->load->language("account/account");
@@ -19,7 +60,7 @@
 				$this->response->redirect($this->url->link("common/home"));
 			}
 
-			$this->document->setTitle($this->language->get("heading_title"));
+			$this->document->setTitle($this->language->get("heading_signup"));
 			// Form data
 			$this->data["email"] = isset($this->request->post["email"]) ? $this->request->post["email"] : '';
 			$this->data["username"]	= isset($this->request->post["username"]) ? $this->request->post["username"] : "";
@@ -69,7 +110,7 @@
 				$this->session->data['success'] = $this->language->get("success_signin");
 				$this->response->redirect($this->url->link("common/home"));
 			}
-
+			$this->document->setTitle($this->language->get("heading_signin"));
 			// Form
 			$this->data["action"] = $this->url->link("account/account/signin");
 			// Form labels
@@ -121,6 +162,9 @@
 				$this->session->data["notice"] = $this->language->get("error_signedin");
 				$this->response->redirect($this->url->link("common/home"));
 			}
+		}
+		private function validate() {
+
 		}
 	}
 ?>

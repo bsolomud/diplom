@@ -19,5 +19,19 @@
 				}
 			}
 		}
+		public function getUsersList($current_user) {
+			$query = $this->db->query("SELECT `user_id`, `username` FROM `" . DB_PREFIX . "user` WHERE `user_id` NOT IN ($current_user)");
+			return $query->rows;
+		}
+		public function getUserData($user_id) {
+			$return = array();
+			$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "user` WHERE `user_id`=$user_id LIMIT 1");
+			$return = $query->row;
+			$friends = $this->db->query("SELECT `friend_id` FROM `" . DB_PREFIX . "user_friend` WHERE `user_id`=$user_id");
+			$return["friends"] = array();
+			foreach($friends->rows as $friend)
+				$return["friends"][] = $friend["friend_id"];
+			return $return;
+		}
 	}
 ?>
