@@ -18,6 +18,9 @@ a {
 a:hover {
 	cursor:pointer;
 }
+input[type="checkbox"]:hover {
+	cursor:pointer;
+}
 .header-conteiner {
 	width:990px;
 	margin:0 auto;
@@ -37,36 +40,38 @@ a:hover {
 	padding:0;
 	position:absolute;
 	top:0;
-	left:10px;
+	left:5%;
 	z-index:100;
 }
 .message span {
 	display:block;
 	border-radius:5px;
 	margin:0;
-	padding:3px 30px 3px 10px;
+	padding:10px 30px 10px 10px;
 	text-align:center;
 	overflow:hidden;
 	word-wrap:break-word;
 	color:#ccc;
 	font-size:11pt;
+	font-weight:700;
+	text-shadow:;
 }
 .message span:hover {cursor:pointer;}
 .success {
 	box-shadow:inset 0px 0px 10px #00d700;
-	background:url("../image/success.png") 98% center no-repeat;
+	background:#000 url("../image/success.png") 98% center no-repeat;
 }
 .warning {
 	box-shadow:inset 0px 0px 10px #a1004c;
-	background:url("../image/error.png") 98% center no-repeat;
+	background:#000 url("../image/error.png") 98% center no-repeat;
 }
 .notice {
 	box-shadow:inset 0px 0px 10px #ff8200;
-	background:url("../image/notice.png") 98% center no-repeat;
+	background:#000 url("../image/notice.png") 98% center no-repeat;
 }
 .info {
 	box-shadow:inset 0px 0px 10px #000098;
-	background:url("../image/info.png") 98% center no-repeat;
+	background:#000 url("../image/info.png") 98% center no-repeat;
 }
 .header-conteiner .clock {
 	width:350px;
@@ -296,28 +301,58 @@ a:hover {
 	padding:15px 10px;
 	border-radius:5px;
 }
-.signup-form table tr td.form-label {
+.form-label {
 	width:200px;
 }
-.signup-form table tr td.form-input {
+.form-input {
 	width:250px;
 	text-align:center;
 }
-.signup-form table tr td.form-input input {
+.form-input input {
 	padding:5px;
 	color:#000;
 	font-size:10pt;
 	width:95%;
 }
-.signup-form table tr td.form-info {
+.form-info {
 	font-size:8pt;
 }
-.signup-form table tr td.form-info span {
+.form-info span {
 	display:block;
 	padding-right:30px;
 	padding:10px 30px 10px 10px;
 	border-radius:5px;
 }
+.form-submit {
+	text-align:center;
+}
+.form-submit input {
+	border:none;
+	border-radius:50px;
+	padding:10px;
+	background:rgba(200,200,200,0.1);
+	box-shadow:0px 0px 5px #ccc;
+	font-weight:700;
+}
+.form-submit input:hover {
+	cursor:pointer;
+	background:rgba(255,255,255,0.2);
+	text-shadow:0px 0px 3px #00d700;
+}
+.center {
+	text-align:center;
+}
+.signin-form table {
+	width:500px;
+	margin:20px auto;
+	padding:0;
+}
+.signin-form table tr td {
+	color:#fff;
+	padding:15px 5px;
+	border-radius:5px;
+}
+
 /*		Frames	*/
 @-webkit-keyframes clocksep {
 	0% {opacity:1;text-shadow:0px 0px 20px #00c6ff;}

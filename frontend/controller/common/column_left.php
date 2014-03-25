@@ -12,9 +12,9 @@
 					"href"	=> $this->url->link("common/home"),
 				)
 			);
-			if($this->user->isLogged()) {
+			if($this->user->signedIn()) {
 				$this->data['navigation'][] = array(
-					"text"	=> $this->langauge->get("text_account"),
+					"text"	=> $this->language->get("text_account"),
 					"href"	=> $this->url->link("account/account"),
 				);
 				if($this->user->hasPermission("modify", "setting/setting")) {

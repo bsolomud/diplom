@@ -43,7 +43,7 @@ class ControllerCommonHeader extends Controller {
 		$this->data['redirect'] = $this->url->link((isset($this->request->get['route'])) ? $this->request->get['route'] : 'common/home');
 		$this->data['login_action'] = $this->url->link('common/login');
 		// If user is signed in
-		if($this->user->isLogged()) {
+		if($this->user->signedIn()) {
 			$this->data['navigation'] = array(
 				array(
 					"text"	=> $this->language->get("text_signout"),
@@ -77,9 +77,9 @@ class ControllerCommonHeader extends Controller {
 			$this->data['message']['notice'] = $this->session->data['notice'];
 			unset($this->session->data['notice']);
 		}
-		if(isset($this->session->data['warnign'])) {
-			$this->data['message']['warnign'] = $this->session->data['warnign'];
-			unset($this->session->data['warnign']);
+		if(isset($this->session->data['warning'])) {
+			$this->data['message']['warning'] = $this->session->data['warning'];
+			unset($this->session->data['warning']);
 		}
 		if(isset($this->session->data['info'])) {
 			$this->data['message']['info'] = $this->session->data['info'];

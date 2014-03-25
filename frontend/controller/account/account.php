@@ -9,9 +9,13 @@
 			$this->load->language("account/account");
 			$this->load->model("user/user");
 
+			$this->checkUserSession();
+
 			if($this->request->server["REQUEST_METHOD"] == "POST" && $this->validateSignUp()) {
 				$this->model_user_user->createNewUser($this->request->post, $this->request->server["REMOTE_ADDR"]);
 				$this->session->data['success'] = $this->language->get("success_signup");
+				if(isset($this->request->post["signin"]))
+					$this->user->signIn($this->request->post["username"], $this->request->post["password"]);
 				$this->response->redirect($this->url->link("common/home"));
 			}
 
@@ -20,6 +24,7 @@
 			$this->data["email"] = isset($this->request->post["email"]) ? $this->request->post["email"] : '';
 			$this->data["username"]	= isset($this->request->post["username"]) ? $this->request->post["username"] : "";
 			$this->data["password"] = "";
+			$this->data["signin"] = isset($this->request->post["signin"]) ? true : false;
 			// Form action
 			$this->data["action"] = $this->url->link("account/account/signup");
 			// Form labels
@@ -27,6 +32,7 @@
 			$this->data["label_email"] = $this->language->get("label_email");
 			$this->data["label_password"] = $this->language->get("label_password");
 			$this->data["label_password_confirm"] = $this->language->get("label_password_confirm");
+			$this->data["label_signin"] = $this->language->get("label_signin");
 			$this->data["submit"] = $this->language->get("label_submit");
 			// Form placeholders
 			$this->data["placeholder_username"] = $this->language->get("placeholder_username");
@@ -54,7 +60,49 @@
 			$this->response->setOutput($this->render());
 		}
 		public function signin() {
+			$this->load->language("account/account");
+			$this->load->model("user/user");
 
+			$this->checkUserSession();
+
+			if($this->request->server["REQUEST_METHOD"] == "POST" && $this->validateSignIn()) {
+				$this->session->data['success'] = $this->language->get("success_signin");
+				$this->response->redirect($this->url->link("common/home"));
+			}
+
+			// Form
+			$this->data["action"] = $this->url->link("account/account/signin");
+			// Form labels
+			$this->data["label_username"] = $this->language->get("label_username");
+			$this->data["label_password"] = $this->language->get("label_password");
+			$this->data["label_submit"]   = $this->language->get("label_submit");
+			// Form placeholders
+			$this->data["placeholder_username"] = $this->language->get("placeholder_username");
+			$this->data["placeholder_password"] = $this->language->get("placeholder_password");
+			// Form values
+			$this->data["username"] = isset($this->request->post["username"]) ? $this->request->post["username"] : "";
+			$this->data['password'] = "";
+			// Form validates
+			if($this->error)
+				$this->session->data['warning'] = $this->error["warning"];
+			// Rendering...
+			if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/account/signin.tpl'))
+				$this->template = $this->config->get('config_template') . '/template/account/signin.tpl';
+			else
+				$this->template = 'default/template/account/signin.tpl';
+			$this->children = array("common/header", "common/column_left", "common/footer");
+			$this->response->setOutput($this->render());
+		}
+
+		public function signout() {
+			$this->user->signOut();
+			$this->response->redirect($this->url->link("common/home"));
+		}
+
+		private function validateSignIn() {
+			if(!isset($this->request->post["username"]) || !isset($this->request->post["password"]) || !$this->user->signIn($this->request->post["username"], $this->request->post["password"]))
+				$this->error["warning"] = $this->language->get("error_signin");
+			return ($this->error) ? false : true;
 		}
 
 		private function validateSignUp() {
@@ -64,9 +112,15 @@
 				$this->error["email"] = $this->language->get("error_email");;
 			if(!isset($this->request->post["password"]) || !preg_match("/.{8,64}/i", $this->request->post["password"]))
 				$this->error["password"] = $this->language->get("error_password");;
-			if(!isset($this->request->post["passowrd_confirm"]) || $this->request->post["password"] != $this->request->post["password"])
+			if(!isset($this->request->post["password_confirm"]) || $this->request->post["password_confirm"] != $this->request->post["password"])
 				$this->error["password_confirm"] = $this->language->get("error_password_confirm");;
 			return ($this->error) ? false : true;
+		}
+		private function checkUserSession() {
+			if($this->user->signedIn()) {
+				$this->session->data["notice"] = $this->language->get("error_signedin");
+				$this->response->redirect($this->url->link("common/home"));
+			}
 		}
 	}
 ?>
