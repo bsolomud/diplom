@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Mar 22, 2014 at 07:10 AM
+-- Generation Time: Mar 27, 2014 at 12:14 PM
 -- Server version: 5.5.35
 -- PHP Version: 5.3.10-1ubuntu3.10
 
@@ -19,34 +19,6 @@ SET time_zone = "+00:00";
 --
 -- Database: `dyplom`
 --
-
--- --------------------------------------------------------
-
---
--- Table structure for table `db_user_friend`
---
-
-CREATE TABLE IF NOT EXISTS `db_user_friend` (
-  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `user_id` int(11) NOT NULL,
-  `friend_id` int(11) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `db_user_metadata`
---
-
-CREATE TABLE IF NOT EXISTS `db_user_metadata` (
-  `metadata_id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `user_id` int(11) NOT NULL,
-  ```key``` varchar(32) NOT NULL,
-  ```value``` text NOT NULL,
-  `serialized` enum('1','0') NOT NULL DEFAULT '0',
-  PRIMARY KEY (`metadata_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -125,23 +97,34 @@ CREATE TABLE IF NOT EXISTS `dp_user` (
   `user_group_id` int(11) NOT NULL,
   `username` varchar(20) NOT NULL,
   `password` varchar(40) NOT NULL,
-  `salt` varchar(9) NOT NULL,
-  `firstname` varchar(32) NOT NULL,
-  `lastname` varchar(32) NOT NULL,
   `email` varchar(96) NOT NULL,
-  `code` varchar(40) NOT NULL,
   `ip` varchar(40) NOT NULL,
   `status` tinyint(1) NOT NULL,
-  `date_added` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `created_at` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`user_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=4 ;
 
 --
 -- Dumping data for table `dp_user`
 --
 
-INSERT INTO `dp_user` (`user_id`, `user_group_id`, `username`, `password`, `salt`, `firstname`, `lastname`, `email`, `code`, `ip`, `status`, `date_added`) VALUES
-(1, 1, 'kilbioas', '91e5a2b695bad76e0e2adc55da6c7d48556d59c7', 'f40a33ddc', '', '', 'oaskilbi@ukr.net', '', '', 1, '2014-03-14 10:20:50');
+INSERT INTO `dp_user` (`user_id`, `user_group_id`, `username`, `password`, `email`, `ip`, `status`, `created_at`, `updated_at`) VALUES
+(1, 1, 'kilbioas', 'bbde4bb6048cc58f42713b0634581197', 'oaskilbi@ukr.net', '127.0.0.1', 1, '2014-03-14 10:20:50', '2014-03-25 12:46:39'),
+(3, 2, 'roma', '3f39e64ab222f29be0bb6da0dd5c552c', 'roma@gmail.ua', '127.0.0.1', 1, '2014-03-25 14:58:23', '0000-00-00 00:00:00');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `dp_user_friend`
+--
+
+CREATE TABLE IF NOT EXISTS `dp_user_friend` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) NOT NULL,
+  `friend_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -161,8 +144,8 @@ CREATE TABLE IF NOT EXISTS `dp_user_group` (
 --
 
 INSERT INTO `dp_user_group` (`user_group_id`, `name`, `permission`) VALUES
-(1, 'Top Administrator', 'a:2:{s:6:"access";a:146:{i:0;s:17:"catalog/attribute";i:1;s:23:"catalog/attribute_group";i:2;s:16:"catalog/category";i:3;s:16:"catalog/download";i:4;s:14:"catalog/filter";i:5;s:19:"catalog/information";i:6;s:20:"catalog/manufacturer";i:7;s:14:"catalog/option";i:8;s:15:"catalog/product";i:9;s:15:"catalog/profile";i:10;s:14:"catalog/review";i:11;s:18:"common/filemanager";i:12;s:13:"design/banner";i:13;s:19:"design/custom_field";i:14;s:13:"design/layout";i:15;s:14:"extension/feed";i:16;s:17:"extension/manager";i:17;s:16:"extension/module";i:18;s:17:"extension/openbay";i:19;s:17:"extension/payment";i:20;s:18:"extension/shipping";i:21;s:15:"extension/total";i:22;s:16:"feed/google_base";i:23;s:19:"feed/google_sitemap";i:24;s:20:"localisation/country";i:25;s:21:"localisation/currency";i:26;s:21:"localisation/geo_zone";i:27;s:21:"localisation/language";i:28;s:25:"localisation/length_class";i:29;s:25:"localisation/order_status";i:30;s:26:"localisation/return_action";i:31;s:26:"localisation/return_reason";i:32;s:26:"localisation/return_status";i:33;s:25:"localisation/stock_status";i:34;s:22:"localisation/tax_class";i:35;s:21:"localisation/tax_rate";i:36;s:25:"localisation/weight_class";i:37;s:17:"localisation/zone";i:38;s:14:"module/account";i:39;s:16:"module/affiliate";i:40;s:29:"module/amazon_checkout_layout";i:41;s:13:"module/banner";i:42;s:17:"module/bestseller";i:43;s:15:"module/carousel";i:44;s:15:"module/category";i:45;s:18:"module/ebaydisplay";i:46;s:15:"module/featured";i:47;s:13:"module/filter";i:48;s:18:"module/google_talk";i:49;s:18:"module/information";i:50;s:13:"module/latest";i:51;s:17:"module/openbaypro";i:52;s:16:"module/pp_layout";i:53;s:16:"module/slideshow";i:54;s:14:"module/special";i:55;s:12:"module/store";i:56;s:14:"module/welcome";i:57;s:14:"openbay/amazon";i:58;s:22:"openbay/amazon_listing";i:59;s:22:"openbay/amazon_product";i:60;s:16:"openbay/amazonus";i:61;s:24:"openbay/amazonus_listing";i:62;s:24:"openbay/amazonus_product";i:63;s:20:"openbay/ebay_profile";i:64;s:21:"openbay/ebay_template";i:65;s:15:"openbay/openbay";i:66;s:23:"payment/amazon_checkout";i:67;s:24:"payment/authorizenet_aim";i:68;s:21:"payment/bank_transfer";i:69;s:14:"payment/cheque";i:70;s:11:"payment/cod";i:71;s:21:"payment/free_checkout";i:72;s:22:"payment/klarna_account";i:73;s:22:"payment/klarna_invoice";i:74;s:14:"payment/liqpay";i:75;s:20:"payment/moneybookers";i:76;s:14:"payment/nochex";i:77;s:15:"payment/paymate";i:78;s:16:"payment/paypoint";i:79;s:13:"payment/payza";i:80;s:26:"payment/perpetual_payments";i:81;s:18:"payment/pp_express";i:82;s:25:"payment/pp_payflow_iframe";i:83;s:14:"payment/pp_pro";i:84;s:21:"payment/pp_pro_iframe";i:85;s:17:"payment/pp_pro_pf";i:86;s:17:"payment/pp_pro_uk";i:87;s:19:"payment/pp_standard";i:88;s:15:"payment/sagepay";i:89;s:22:"payment/sagepay_direct";i:90;s:18:"payment/sagepay_us";i:91;s:19:"payment/twocheckout";i:92;s:28:"payment/web_payment_software";i:93;s:16:"payment/worldpay";i:94;s:27:"report/affiliate_commission";i:95;s:22:"report/customer_credit";i:96;s:22:"report/customer_online";i:97;s:21:"report/customer_order";i:98;s:22:"report/customer_reward";i:99;s:24:"report/product_purchased";i:100;s:21:"report/product_viewed";i:101;s:18:"report/sale_coupon";i:102;s:17:"report/sale_order";i:103;s:18:"report/sale_return";i:104;s:20:"report/sale_shipping";i:105;s:15:"report/sale_tax";i:106;s:14:"sale/affiliate";i:107;s:12:"sale/contact";i:108;s:11:"sale/coupon";i:109;s:13:"sale/customer";i:110;s:20:"sale/customer_ban_ip";i:111;s:19:"sale/customer_group";i:112;s:10:"sale/order";i:113;s:14:"sale/recurring";i:114;s:11:"sale/return";i:115;s:12:"sale/voucher";i:116;s:18:"sale/voucher_theme";i:117;s:15:"setting/setting";i:118;s:13:"setting/store";i:119;s:16:"shipping/auspost";i:120;s:17:"shipping/citylink";i:121;s:14:"shipping/fedex";i:122;s:13:"shipping/flat";i:123;s:13:"shipping/free";i:124;s:13:"shipping/item";i:125;s:23:"shipping/parcelforce_48";i:126;s:15:"shipping/pickup";i:127;s:19:"shipping/royal_mail";i:128;s:12:"shipping/ups";i:129;s:13:"shipping/usps";i:130;s:15:"shipping/weight";i:131;s:11:"tool/backup";i:132;s:14:"tool/error_log";i:133;s:12:"total/coupon";i:134;s:12:"total/credit";i:135;s:14:"total/handling";i:136;s:16:"total/klarna_fee";i:137;s:19:"total/low_order_fee";i:138;s:12:"total/reward";i:139;s:14:"total/shipping";i:140;s:15:"total/sub_total";i:141;s:9:"total/tax";i:142;s:11:"total/total";i:143;s:13:"total/voucher";i:144;s:9:"user/user";i:145;s:20:"user/user_permission";}s:6:"modify";a:146:{i:0;s:17:"catalog/attribute";i:1;s:23:"catalog/attribute_group";i:2;s:16:"catalog/category";i:3;s:16:"catalog/download";i:4;s:14:"catalog/filter";i:5;s:19:"catalog/information";i:6;s:20:"catalog/manufacturer";i:7;s:14:"catalog/option";i:8;s:15:"catalog/product";i:9;s:15:"catalog/profile";i:10;s:14:"catalog/review";i:11;s:18:"common/filemanager";i:12;s:13:"design/banner";i:13;s:19:"design/custom_field";i:14;s:13:"design/layout";i:15;s:14:"extension/feed";i:16;s:17:"extension/manager";i:17;s:16:"extension/module";i:18;s:17:"extension/openbay";i:19;s:17:"extension/payment";i:20;s:18:"extension/shipping";i:21;s:15:"extension/total";i:22;s:16:"feed/google_base";i:23;s:19:"feed/google_sitemap";i:24;s:20:"localisation/country";i:25;s:21:"localisation/currency";i:26;s:21:"localisation/geo_zone";i:27;s:21:"localisation/language";i:28;s:25:"localisation/length_class";i:29;s:25:"localisation/order_status";i:30;s:26:"localisation/return_action";i:31;s:26:"localisation/return_reason";i:32;s:26:"localisation/return_status";i:33;s:25:"localisation/stock_status";i:34;s:22:"localisation/tax_class";i:35;s:21:"localisation/tax_rate";i:36;s:25:"localisation/weight_class";i:37;s:17:"localisation/zone";i:38;s:14:"module/account";i:39;s:16:"module/affiliate";i:40;s:29:"module/amazon_checkout_layout";i:41;s:13:"module/banner";i:42;s:17:"module/bestseller";i:43;s:15:"module/carousel";i:44;s:15:"module/category";i:45;s:18:"module/ebaydisplay";i:46;s:15:"module/featured";i:47;s:13:"module/filter";i:48;s:18:"module/google_talk";i:49;s:18:"module/information";i:50;s:13:"module/latest";i:51;s:17:"module/openbaypro";i:52;s:16:"module/pp_layout";i:53;s:16:"module/slideshow";i:54;s:14:"module/special";i:55;s:12:"module/store";i:56;s:14:"module/welcome";i:57;s:14:"openbay/amazon";i:58;s:22:"openbay/amazon_listing";i:59;s:22:"openbay/amazon_product";i:60;s:16:"openbay/amazonus";i:61;s:24:"openbay/amazonus_listing";i:62;s:24:"openbay/amazonus_product";i:63;s:20:"openbay/ebay_profile";i:64;s:21:"openbay/ebay_template";i:65;s:15:"openbay/openbay";i:66;s:23:"payment/amazon_checkout";i:67;s:24:"payment/authorizenet_aim";i:68;s:21:"payment/bank_transfer";i:69;s:14:"payment/cheque";i:70;s:11:"payment/cod";i:71;s:21:"payment/free_checkout";i:72;s:22:"payment/klarna_account";i:73;s:22:"payment/klarna_invoice";i:74;s:14:"payment/liqpay";i:75;s:20:"payment/moneybookers";i:76;s:14:"payment/nochex";i:77;s:15:"payment/paymate";i:78;s:16:"payment/paypoint";i:79;s:13:"payment/payza";i:80;s:26:"payment/perpetual_payments";i:81;s:18:"payment/pp_express";i:82;s:25:"payment/pp_payflow_iframe";i:83;s:14:"payment/pp_pro";i:84;s:21:"payment/pp_pro_iframe";i:85;s:17:"payment/pp_pro_pf";i:86;s:17:"payment/pp_pro_uk";i:87;s:19:"payment/pp_standard";i:88;s:15:"payment/sagepay";i:89;s:22:"payment/sagepay_direct";i:90;s:18:"payment/sagepay_us";i:91;s:19:"payment/twocheckout";i:92;s:28:"payment/web_payment_software";i:93;s:16:"payment/worldpay";i:94;s:27:"report/affiliate_commission";i:95;s:22:"report/customer_credit";i:96;s:22:"report/customer_online";i:97;s:21:"report/customer_order";i:98;s:22:"report/customer_reward";i:99;s:24:"report/product_purchased";i:100;s:21:"report/product_viewed";i:101;s:18:"report/sale_coupon";i:102;s:17:"report/sale_order";i:103;s:18:"report/sale_return";i:104;s:20:"report/sale_shipping";i:105;s:15:"report/sale_tax";i:106;s:14:"sale/affiliate";i:107;s:12:"sale/contact";i:108;s:11:"sale/coupon";i:109;s:13:"sale/customer";i:110;s:20:"sale/customer_ban_ip";i:111;s:19:"sale/customer_group";i:112;s:10:"sale/order";i:113;s:14:"sale/recurring";i:114;s:11:"sale/return";i:115;s:12:"sale/voucher";i:116;s:18:"sale/voucher_theme";i:117;s:15:"setting/setting";i:118;s:13:"setting/store";i:119;s:16:"shipping/auspost";i:120;s:17:"shipping/citylink";i:121;s:14:"shipping/fedex";i:122;s:13:"shipping/flat";i:123;s:13:"shipping/free";i:124;s:13:"shipping/item";i:125;s:23:"shipping/parcelforce_48";i:126;s:15:"shipping/pickup";i:127;s:19:"shipping/royal_mail";i:128;s:12:"shipping/ups";i:129;s:13:"shipping/usps";i:130;s:15:"shipping/weight";i:131;s:11:"tool/backup";i:132;s:14:"tool/error_log";i:133;s:12:"total/coupon";i:134;s:12:"total/credit";i:135;s:14:"total/handling";i:136;s:16:"total/klarna_fee";i:137;s:19:"total/low_order_fee";i:138;s:12:"total/reward";i:139;s:14:"total/shipping";i:140;s:15:"total/sub_total";i:141;s:9:"total/tax";i:142;s:11:"total/total";i:143;s:13:"total/voucher";i:144;s:9:"user/user";i:145;s:20:"user/user_permission";}}'),
-(10, 'Demonstration', '');
+(1, 'Administrator', 'a:1:{s:6:"modify";a:10:{i:0;s:15:"account/account";i:1;s:18:"common/column_left";i:2;s:13:"common/footer";i:3;s:13:"common/header";i:4;s:11:"common/home";i:5;s:12:"common/login";i:6;s:18:"common/maintenance";i:7;s:14:"common/seo_url";i:8;s:15:"error/not_found";i:9;s:11:"video/video";}}'),
+(2, 'Guest', '');
 
 -- --------------------------------------------------------
 
@@ -181,7 +164,38 @@ CREATE TABLE IF NOT EXISTS `dp_videolist` (
   `created_at` datetime NOT NULL,
   `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=26 ;
+
+--
+-- Dumping data for table `dp_videolist`
+--
+
+INSERT INTO `dp_videolist` (`id`, `video_id`, `name`, `description`, `thumbnail`, `published_at`, `views`, `created_at`, `updated_at`) VALUES
+(1, 'W-TE_Ys4iwM', 'One Direction - Story of My Life', 'The new album Midnight Memories featuring Story of My Life is out now! Amazon: http://smarturl.it/MidnightMemoriesAmzd iTunes: http://t.co/LKM4OKwGwo ...', 'https://i.ytimg.com/vi/W-TE_Ys4iwM/mqdefault.jpg', '2013-11-03 04:11:02', 0, '2014-03-25 10:21:31', '0000-00-00 00:00:00'),
+(2, 'rJYcmq__nDM', 'Rihanna - Rehab ft. Justin Timberlake', 'Music video by Rihanna performing Rehab. YouTube view counts pre-VEVO: 19591123. (C) 2007 The Island Def Jam Music Group.', 'https://i.ytimg.com/vi/rJYcmq__nDM/mqdefault.jpg', '2009-12-14 03:12:13', 0, '2014-03-25 10:21:31', '0000-00-00 00:00:00'),
+(3, 'rp4UwPZfRis', 'Rihanna - Unfaithful', 'Music video by Rihanna performing Unfaithful. (C) 2006 The Island Def Jam Music Group #VEVOCertified on Feb. 15, 2012. http://vevo.com/certified http://youtu.', 'https://i.ytimg.com/vi/rp4UwPZfRis/mqdefault.jpg', '2009-11-23 08:11:45', 0, '2014-03-25 10:21:31', '0000-00-00 00:00:00'),
+(4, 'mO1QBTG6EXs', 'THE LEGEND OF ZELDA RAP [MUSIC VIDEO]', 'WATCH BLOOPERS & MORE: http://bit.ly/ZELDAxtras DOWNLOAD THE SONG ON ITUNES: http://smo.sh/13NrBp8 DOWNLOAD UNCENSORED SONG: ...', 'https://i.ytimg.com/vi/mO1QBTG6EXs/mqdefault.jpg', '2011-11-18 09:11:54', 0, '2014-03-25 10:21:31', '0000-00-00 00:00:00'),
+(5, 'ZQ2nCGawrSY', 'Rihanna - Russian Roulette', 'Music video by Rihanna performing Russian Roulette. (C) 2009 The Island Def Jam Music Group.', 'https://i.ytimg.com/vi/ZQ2nCGawrSY/mqdefault.jpg', '2009-12-05 06:12:55', 0, '2014-03-25 10:21:31', '0000-00-00 00:00:00'),
+(6, '12PWq22E9CQ', 'ULTIMATE ASSASSIN''S CREED 3 SONG [Music Video]', 'AC4 MUSIC VIDEO: http://youtu.be/WpMt2vzrIxs WATCH BLOOPERS & MORE: http://bit.ly/AC3XTRAS GET THE REMIX! http://smo.sh./iTunesSweetSound ...', 'https://i.ytimg.com/vi/12PWq22E9CQ/mqdefault.jpg', '2012-10-26 07:10:59', 0, '2014-03-25 10:21:31', '0000-00-00 00:00:00'),
+(7, 'tGpLHj-MVtk', 'FIRETRUCK! (Official Music Video)', 'BLOOPERS: http://bit.ly/FiretruckBloopers GET THE SONG: http://smo.sh/WMZv7l MILKSHAKE MUSIC VIDEO: http://bit.ly/MilkyMilkshake CHECK OUT THIS ...', 'https://i.ytimg.com/vi/tGpLHj-MVtk/mqdefault.jpg', '2010-08-27 06:08:03', 0, '2014-03-25 10:21:31', '0000-00-00 00:00:00'),
+(8, '7zxXAtmmLLc', 'My Last Days: Zach Sobiech "Clouds" Celebrity Music Video', 'Zach Sobiech is 17 years old and diagnosed with osteosarcoma, a rare form of bone cancer that takes the lives of a large percent of its childhood victims. Gi...', 'https://i.ytimg.com/vi/7zxXAtmmLLc/mqdefault.jpg', '2013-05-06 10:05:09', 0, '2014-03-25 10:21:31', '0000-00-00 00:00:00'),
+(9, 'pa14VNsdSYM', 'Rihanna - Only Girl (In The World)', 'Music video by Rihanna performing Only Girl (In The World). (C) 2010 The Island Def Jam Music Group #VEVOCertified on February 16, 2011.', 'https://i.ytimg.com/vi/pa14VNsdSYM/mqdefault.jpg', '2010-10-12 10:10:11', 0, '2014-03-25 10:21:31', '0000-00-00 00:00:00'),
+(10, 'bkx9kCdaaMg', 'One Direction - Midnight Memories', 'Pre-order the Midnight Memories single bundle including 3 live tracks now! iTunes: http://smarturl.it/MidnightMemoriesEP Taken from the album Midnight Memori ...', 'https://i.ytimg.com/vi/bkx9kCdaaMg/mqdefault.jpg', '2014-01-31 04:01:07', 0, '2014-03-25 10:21:31', '0000-00-00 00:00:00'),
+(11, 'v4Qv26IWyGU', 'Candy Crush The Movie (Official Fake Trailer)', 'Dedicated to all the Candy Crush and Other Phone Game addicts out there! CANDY CRUSH THE MOVIE ft. Candy Crush, Fruit Ninja, Angry Birds, Temple Run, ...', 'https://i.ytimg.com/vi/v4Qv26IWyGU/mqdefault.jpg', '2013-06-11 10:06:46', 0, '2014-03-25 10:21:31', '0000-00-00 00:00:00'),
+(12, '2Tvy_Pbe5NA', 'Epic Rap Battle: Nerd vs. Geek', 'Comment: Who won? iTUNES: http://bit.ly/NerdvsGeekSong Get the hookup on electronic deals: http://www.TigerDirect.com/RL FREE karaoke/instrumental ...', 'https://i.ytimg.com/vi/2Tvy_Pbe5NA/mqdefault.jpg', '2013-10-03 04:10:02', 0, '2014-03-25 10:21:31', '0000-00-00 00:00:00'),
+(13, 'y6Sxv-sUYtM', 'Pharrell Williams - Happy (Official Music Video)', 'Get Pharrell''s new album G I R L with 10 Brand New Tracks on iTunes: http://smarturl.it/GIRLitunes Get Pharrell''s new album G I R L with 10 Brand New Tracks ...', 'https://i.ytimg.com/vi/y6Sxv-sUYtM/mqdefault.jpg', '2013-11-22 05:11:00', 0, '2014-03-25 10:21:31', '0000-00-00 00:00:00'),
+(14, 'KPmoDYayoLE', 'Draw My Life - Ryan Higa', 'So i was pretty hesitant to make this video... but after all of your request, here is my Draw My Life video! Check out my 2nd Channel for more vlogs: http://...', 'https://i.ytimg.com/vi/KPmoDYayoLE/mqdefault.jpg', '2013-04-11 03:04:45', 0, '2014-03-25 10:21:31', '0000-00-00 00:00:00'),
+(15, '4Y1iErgBrDQ', 'Celebrities Read Mean Tweets #6', 'Some people are cruel and write very harsh things to celebrities on Twitter. What you don''t see when you send a nasty tweet is that it can cause pain. So to ...', 'https://i.ytimg.com/vi/4Y1iErgBrDQ/mqdefault.jpg', '2014-02-07 07:02:35', 0, '2014-03-25 10:21:31', '0000-00-00 00:00:00'),
+(16, 'X86S5oZzzh4', 'Enrique Iglesias - Tired Of Being Sorry (MUSIC VIDEO)', 'Get Enrique''s new single "Tonight" on iTunes: http://bit.ly/b8gM8R See Enrique at Madison Square Garden. Get your tickets here: http://bit.ly/hzgV69.', 'https://i.ytimg.com/vi/X86S5oZzzh4/mqdefault.jpg', '2007-08-07 02:08:19', 0, '2014-03-25 10:21:31', '0000-00-00 00:00:00'),
+(17, 'uzgp65UnPxA', 'We Can''t Stop - Miley Cyrus (Boyce Avenue feat. Bea Miller cover) on iTunes & Spotify', 'Tickets + VIP Meet & Greets: http://smarturl.it/BATour iTunes: http://smarturl.it/BoyceCCV2 Spotify: http://smarturl.it/BoyceCCV2Spotify - - - - - - - - - - ...', 'https://i.ytimg.com/vi/uzgp65UnPxA/mqdefault.jpg', '2013-09-29 04:09:03', 0, '2014-03-25 10:21:31', '0000-00-00 00:00:00'),
+(18, 'JF8BRvqGCNs', 'Rihanna - Stay ft. Mikky Ekko', 'Download "Stay" from Unapologetic now: http://smarturl.it/UnapologeticDlx Music video by Rihanna performing Stay ft. Mikky Ekko. © 2013 The Island Def Jam ...', 'https://i.ytimg.com/vi/JF8BRvqGCNs/mqdefault.jpg', '2013-02-12 12:02:10', 0, '2014-03-25 10:21:31', '0000-00-00 00:00:00'),
+(19, '1_hKLfTKU5Y', 'Mario Bros vs Wright Bros.  Epic Rap Battles of History Season 2', 'Download this song: http://bit.ly/MarioRap Click to tweet this vid-ee-oh! http://clicktotweet.com/c534e This. Is. Merchandise: http://bit.ly/ERBMerch http://...', 'https://i.ytimg.com/vi/1_hKLfTKU5Y/mqdefault.jpg', '2012-02-17 12:02:04', 0, '2014-03-25 10:21:31', '0000-00-00 00:00:00'),
+(20, '0HwlhGOxsE0', 'Skate 3 - FUNNY MOMENTS - Part 1', 'Watch Part 2 - http://www.youtube.com/watch?v=kbR0UQrX05M Click Here To Subscribe! ▻ http://bit.ly/JoinBroArmy Once again internet isn''t working in the ...', 'https://i.ytimg.com/vi/0HwlhGOxsE0/mqdefault.jpg', '2014-01-08 12:01:26', 0, '2014-03-25 10:21:31', '0000-00-00 00:00:00'),
+(21, 'VzEHmcABGUU', 'LES PRESENTO A MI NOVIA | Preguntas De Facebook | Hola Soy German', 'Suscribete → http://bit.ly/SuscribeteHSG Facebook → http://bit.ly/FacebookHSG Twitter → http://bit.ly/TwitterHSG Instagram → http://instagram.com/germanchelo.', 'https://i.ytimg.com/vi/VzEHmcABGUU/mqdefault.jpg', '2014-03-01 03:03:09', 0, '2014-03-25 10:21:31', '0000-00-00 00:00:00'),
+(22, '36mCEZzzQ3o', 'One Direction - One Way Or Another (Teenage Kicks)', 'As well as releasing the Red Nose Day single, One Direction are fundraising by doing something funny for money...and they want you to join them! Get involved.', 'https://i.ytimg.com/vi/36mCEZzzQ3o/mqdefault.jpg', '2013-02-20 11:02:26', 0, '2014-03-25 10:21:31', '0000-00-00 00:00:00'),
+(23, 'z-3xIw730pg', 'WORLDS MOST OFFENSIVE GAME?', 'Fridays With PewDiePie, Saturday edition! Click Here To Subscribe! ▻ http://bit.ly/JoinBroArmy Game ▻ Cards Against Humanity You can buy it online ...', 'https://i.ytimg.com/vi/z-3xIw730pg/mqdefault.jpg', '2013-11-24 01:11:35', 0, '2014-03-25 10:21:31', '0000-00-00 00:00:00'),
+(24, '0m1hAfpOzbU', 'Peg Pants!', 'Don''t you just wish you could pull a chair out of your butt sometimes? Well wish no further.. wait.. wish no more? Stop wishing, it doesn''t work. Uhh. Peg Pa...', 'https://i.ytimg.com/vi/0m1hAfpOzbU/mqdefault.jpg', '2013-11-09 07:11:54', 0, '2014-03-25 10:21:31', '0000-00-00 00:00:00'),
+(25, '-uwY3sjqYX0', 'Fast Food Folk Song - Rhett & Link', 'Yes! the guy''s reaction is totally authentic. He had no idea we were coming, and he really got the order right (almost right). We couldn''t believe it either, so we ...', 'https://i.ytimg.com/vi/-uwY3sjqYX0/mqdefault.jpg', '2009-04-08 07:04:03', 0, '2014-03-25 10:21:31', '0000-00-00 00:00:00');
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
