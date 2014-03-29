@@ -12,8 +12,8 @@ class User {
 			$user_query = $this->db->query("SELECT * FROM " . DB_PREFIX . "user WHERE user_id = '" . (int)$this->session->data['user_id'] . "' AND status = '1'");
 
 			if ($user_query->num_rows) {
-				$this->data["user_id"] = $user_query->row['user_id'];
-				$this->data["username"] = $user_query->row['username'];
+				foreach($user_query->row as $key => $value)
+					$this->data[$key] = $value;
 				$this->db->query("UPDATE " . DB_PREFIX . "user SET ip = '" . $this->db->escape($this->request->server['REMOTE_ADDR']) . "' WHERE user_id = '" . (int)$this->session->data['user_id'] . "'");
 				$user_group_query = $this->db->query("SELECT permission FROM " . DB_PREFIX . "user_group WHERE user_group_id = '" . (int)$user_query->row['user_group_id'] . "'");
 				$permissions = unserialize($user_group_query->row['permission']);

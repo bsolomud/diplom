@@ -12,7 +12,16 @@
 			}
 			// Handle form
 			if($this->request->server["REQUEST_METHOD"] == "POST" && $this->validate()) {
-				echo '<pre>'; print_r($this->request->post); echo '</pre>';exit;
+				$update = array();
+				if(isset($this->request->post["email"]) && $this->request->post["email"] == $this->user->get("email"))
+					unset($this->request->post["email"]);
+				unset($this->request->post["password_confirm"]);
+				foreach($this->request->post as $key => $info) {
+					if($info)
+						$update[$key] = $info;
+				}
+				$this->model_user_user->updateUserData($this->user->get("user_id"), $update);
+				$this->session->data["success"] = $this->language->get("success_update");
 			}
 			$userData = $this->model_user_user->getUserData($this->user->get("user_id"));
 			$this->document->setTitle(sprintf($this->language->get("heading_account"), $userData["username"]));
@@ -38,6 +47,9 @@
 			$this->data["valid_email"]    = isset($this->error["email"]) ? $this->error["email"] : false;
 			$this->data["valid_password"] = isset($this->error["password"]) ? $this->error["password"] : false;
 			$this->data["valid_password_confirm"] = isset($this->error["password_confirm"]) ? $this->error["password_confirm"] : false;
+			// Alert
+			if($this->error)
+				$this->session->data["warning"] = $this->language->get("error_form");
 			// Rendering...
 			if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/account/account.tpl'))
 				$this->template = $this->config->get('config_template') . '/template/account/account.tpl';
@@ -150,11 +162,11 @@
 			if(!isset($this->request->post["username"]) || !preg_match("/\w{4,64}/i", $this->request->post["username"]) || $this->model_user_user->usernameExists($this->request->post["username"]))
 				$this->error["username"] = $this->language->get("error_username");
 			if(!isset($this->request->post["email"]) || !preg_match("/\w+@\w+\.[a-z]+(\.[a-z]{1,4})?/i", $this->request->post["email"]) || $this->model_user_user->emailExists($this->request->post["email"]))
-				$this->error["email"] = $this->language->get("error_email");;
+				$this->error["email"] = $this->language->get("error_email");
 			if(!isset($this->request->post["password"]) || !preg_match("/.{8,64}/i", $this->request->post["password"]))
-				$this->error["password"] = $this->language->get("error_password");;
+				$this->error["password"] = $this->language->get("error_password");
 			if(!isset($this->request->post["password_confirm"]) || $this->request->post["password_confirm"] != $this->request->post["password"])
-				$this->error["password_confirm"] = $this->language->get("error_password_confirm");;
+				$this->error["password_confirm"] = $this->language->get("error_password_confirm");
 			return ($this->error) ? false : true;
 		}
 		private function checkUserSession() {
@@ -164,7 +176,13 @@
 			}
 		}
 		private function validate() {
-
+			if(isset($this->request->post["password"]) && !empty($this->request->post["password"]) && !preg_match("/.{8,64}/i", $this->request->post["password"]))
+				$this->error["password"] = $this->language->get("error_password");
+			if(isset($this->request->post["password_confirm"]) && !empty($this->request->post["password_confirm"]) && $this->request->post["password_confirm"] != $this->request->post["password"])
+				$this->error["password_confirm"] = $this->language->get("error_password_confirm");
+			if(isset($this->request->post["email"]) && !preg_match("/\w+@\w+\.[a-z]+(\.[a-z]{1,4})?/i", $this->request->post["email"]) && $this->request->post["email"] != $this->user->get("email") && $this->model_user_user->emailExists($this->request->post["email"]))
+				$this->error["email"] = $this->language->get("error_email");
+			return ($this->error) ? false : true;
 		}
 	}
 ?>

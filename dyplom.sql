@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Mar 27, 2014 at 12:14 PM
+-- Generation Time: Mar 29, 2014 at 10:48 AM
 -- Server version: 5.5.35
 -- PHP Version: 5.3.10-1ubuntu3.10
 
@@ -89,6 +89,22 @@ INSERT INTO `dp_setting` (`setting_id`, `group`, `key`, `value`, `serialized`) V
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `dp_share`
+--
+
+CREATE TABLE IF NOT EXISTS `dp_share` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) NOT NULL,
+  `video_id` int(11) NOT NULL,
+  `created_at` datetime NOT NULL,
+  `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' ON UPDATE CURRENT_TIMESTAMP,
+  `status` enum('1','0') NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `dp_user`
 --
 
@@ -103,7 +119,7 @@ CREATE TABLE IF NOT EXISTS `dp_user` (
   `created_at` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`user_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=4 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=5 ;
 
 --
 -- Dumping data for table `dp_user`
@@ -111,7 +127,8 @@ CREATE TABLE IF NOT EXISTS `dp_user` (
 
 INSERT INTO `dp_user` (`user_id`, `user_group_id`, `username`, `password`, `email`, `ip`, `status`, `created_at`, `updated_at`) VALUES
 (1, 1, 'kilbioas', 'bbde4bb6048cc58f42713b0634581197', 'oaskilbi@ukr.net', '127.0.0.1', 1, '2014-03-14 10:20:50', '2014-03-25 12:46:39'),
-(3, 2, 'roma', '3f39e64ab222f29be0bb6da0dd5c552c', 'roma@gmail.ua', '127.0.0.1', 1, '2014-03-25 14:58:23', '0000-00-00 00:00:00');
+(3, 2, 'roma', '3f39e64ab222f29be0bb6da0dd5c552c', 'roma@gmail.ua', '127.0.0.1', 1, '2014-03-25 14:58:23', '0000-00-00 00:00:00'),
+(4, 2, 'donat', '85064efb60a9601805dcea56ec5402f7', 'dota@dota.com', '127.0.0.1', 1, '2014-03-29 08:59:05', '0000-00-00 00:00:00');
 
 -- --------------------------------------------------------
 
@@ -124,7 +141,15 @@ CREATE TABLE IF NOT EXISTS `dp_user_friend` (
   `user_id` int(11) NOT NULL,
   `friend_id` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
+
+--
+-- Dumping data for table `dp_user_friend`
+--
+
+INSERT INTO `dp_user_friend` (`id`, `user_id`, `friend_id`) VALUES
+(1, 1, 3),
+(2, 1, 4);
 
 -- --------------------------------------------------------
 
@@ -171,7 +196,7 @@ CREATE TABLE IF NOT EXISTS `dp_videolist` (
 --
 
 INSERT INTO `dp_videolist` (`id`, `video_id`, `name`, `description`, `thumbnail`, `published_at`, `views`, `created_at`, `updated_at`) VALUES
-(1, 'W-TE_Ys4iwM', 'One Direction - Story of My Life', 'The new album Midnight Memories featuring Story of My Life is out now! Amazon: http://smarturl.it/MidnightMemoriesAmzd iTunes: http://t.co/LKM4OKwGwo ...', 'https://i.ytimg.com/vi/W-TE_Ys4iwM/mqdefault.jpg', '2013-11-03 04:11:02', 0, '2014-03-25 10:21:31', '0000-00-00 00:00:00'),
+(1, 'W-TE_Ys4iwM', 'One Direction - Story of My Life', 'The new album Midnight Memories featuring Story of My Life is out now! Amazon: http://smarturl.it/MidnightMemoriesAmzd iTunes: http://t.co/LKM4OKwGwo ...', 'https://i.ytimg.com/vi/W-TE_Ys4iwM/mqdefault.jpg', '2013-11-03 04:11:02', 17, '2014-03-25 10:21:31', '2014-03-29 17:47:23'),
 (2, 'rJYcmq__nDM', 'Rihanna - Rehab ft. Justin Timberlake', 'Music video by Rihanna performing Rehab. YouTube view counts pre-VEVO: 19591123. (C) 2007 The Island Def Jam Music Group.', 'https://i.ytimg.com/vi/rJYcmq__nDM/mqdefault.jpg', '2009-12-14 03:12:13', 0, '2014-03-25 10:21:31', '0000-00-00 00:00:00'),
 (3, 'rp4UwPZfRis', 'Rihanna - Unfaithful', 'Music video by Rihanna performing Unfaithful. (C) 2006 The Island Def Jam Music Group #VEVOCertified on Feb. 15, 2012. http://vevo.com/certified http://youtu.', 'https://i.ytimg.com/vi/rp4UwPZfRis/mqdefault.jpg', '2009-11-23 08:11:45', 0, '2014-03-25 10:21:31', '0000-00-00 00:00:00'),
 (4, 'mO1QBTG6EXs', 'THE LEGEND OF ZELDA RAP [MUSIC VIDEO]', 'WATCH BLOOPERS & MORE: http://bit.ly/ZELDAxtras DOWNLOAD THE SONG ON ITUNES: http://smo.sh/13NrBp8 DOWNLOAD UNCENSORED SONG: ...', 'https://i.ytimg.com/vi/mO1QBTG6EXs/mqdefault.jpg', '2011-11-18 09:11:54', 0, '2014-03-25 10:21:31', '0000-00-00 00:00:00'),

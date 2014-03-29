@@ -330,6 +330,8 @@ input[type="checkbox"]:hover {
 .form-submit input {
 	border:none;
 	border-radius:50px;
+	display:block;
+	margin:0 auto;
 	padding:10px;
 	background:rgba(200,200,200,0.1);
 	box-shadow:0px 0px 5px #ccc;
@@ -372,24 +374,21 @@ input[type="checkbox"]:hover {
 	padding:0;
 	vertical-align:top;
 }
-.input-area ul {
+.input-area table {
 	margin:0;
-	padding:0;
-	list-style:none;
+	padding:0 10px 0 0;
 	max-height:200px;
 	overflow:hidden;
 	overflow-x:hidden;
 	overflow-y:scroll;
-	background:#ccc;
-	text-align:left;
 }
-.input-area ul li {
-	text-align:left;
-	margin:0;
-	padding:0;
-	margin:0;
-	padding:0;
-	overflow:hidden;
+.input-area table tr td {
+	background:rgba(200,200,200,0.3);
+	border-bottom:1px solid #000;
+	color:#000;
+}
+.input-area table tr td.input {
+	width:50px;
 }
 .input-area ul li input[type="checkbox"] {
 	float:left;

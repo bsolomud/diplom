@@ -12,11 +12,10 @@
 			return $query->num_rows;
 		}
 		public function updateUserFriendsList($user_id, $friends = array()) {
-			if($friends) {
-				foreach($friends as $friend_id) {
-					$this->db->query("DELETE FROM `" . DB_PREFIX . "user_friend` WHERE `user_id`=$user_id AND `friend_id`=$friend_id");
-					$this->db->query("INSERT INTO `" . DB_PREFIX . "user_friend` SET `user_id`=$user_id, `friend_id`=$friend_id");
-				}
+			if(is_array($friends)) {
+				$this->db->query("DELETE FROM `" . DB_PREFIX . "user_friend` WHERE `user_id`=$user_id AND `friend_id` IN (" . $this->db->escape(implode(",", $friends)) . ")");
+				foreach($friends as $friend_id)
+					$this->db->query("INSERT INTO `dp_user_friend`(`user_id`, `friend_id`) VALUES ($user_id," . (int)$this->db->escape($friend_id) . ")");
 			}
 		}
 		public function getUsersList($current_user) {
@@ -32,6 +31,22 @@
 			foreach($friends->rows as $friend)
 				$return["friends"][] = $friend["friend_id"];
 			return $return;
+		}
+		public function updateUserData($user_id, $data) {
+			if(isset($data["friends"])) {
+				$this->updateUserFriendsList($user_id, $data["friends"]);
+				unset($data["friends"]);
+			}
+			if($data) {
+				$sql = " ";
+				foreach($data as $key => $value)
+					$sql .= "$key='" . $this->db->escape($value) . "' ";
+				$this->db->query("UPDATE `" . DB_PREFIX . "user` SET$sqlWHERE `user_id`=$user_id");
+			}
+		}
+		public function getUserFriends($user_id) {
+			$query = $this->db->query("SELECT u.user_id,u.username FROM `" . DB_PREFIX . "user_friend` uf LEFT JOIN `" . DB_PREFIX . "user` u ON(uf.friend_id=u.user_id) WHERE uf.user_id=$user_id");
+			return $query;
 		}
 	}
 ?>

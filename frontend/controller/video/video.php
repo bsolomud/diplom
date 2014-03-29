@@ -24,9 +24,21 @@
 				'published'		=> date($this->language->get("publish_format"), strtotime($video->row['published_at'])),
 				'views'			=> $this->model_video_video->getVideoViews($video->row['id'], $video->row['views'])
 			);
-			// Share form
-			$this->data['share_action']	= $this->url->link('video/video', 'video=' . $this->request->get['video']);
-			
+			$this->data["share"] = array();
+			if($this->user->signedIn()) {
+				// Load additional library
+				$this->load->model("user/user");
+				$this->data["share"] = array(
+					"action"	=> $this->url->link("video/share"),
+					"user_id"	=> $this->user->get("user_id"),
+					"text"		=> $this->language->get("text_share"),
+					"submit"	=> $this->language->get("button_submit")
+				);
+				$friends = $this->model_user_user->getUserFriends($this->user->get("user_id"));
+				$this->data["share"]["friends"] = array();
+				foreach($friends->rows as $friend)
+					$this->data["share"]["friends"][$friend["user_id"]] = $friend["username"];
+			}
 			// Rendering...
 			if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/video/video.tpl'))
 				$this->template = $this->config->get('config_template') . '/template/video/video.tpl';

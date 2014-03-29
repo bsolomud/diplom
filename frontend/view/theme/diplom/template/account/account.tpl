@@ -30,13 +30,16 @@
 			<tr>
 				<td class="form-label"><?php echo $label_friends; ?></td>
 				<td class="form-input input-area">
-					<ul>
+					<table cellpadding="0" cellspacing="0">
 					<?php foreach($users as $user) : ?>
-						<li>
-							<input type="checkbox" name="friends[]" value="<?php echo $user["user_id"]; ?>"<?php if(in_array($user["user_id"], $friends)) : ?> checked="checked"<?php endif; ?> />
-						</li>
+						<tr>
+							<td class="input">
+								<input type="checkbox" name="friends[]" value="<?php echo $user["user_id"]; ?>"<?php if(in_array($user["user_id"], $friends)) : ?> checked="checked"<?php endif; ?> />
+							</td>
+							<td><?php echo $user["username"]; ?></td>
+						</tr>
 					<?php endforeach; ?>
-					</ul>
+					</table>
 				</td>
 			</tr>
 			<tr>
