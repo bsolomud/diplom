@@ -20,7 +20,7 @@
 			}
 		}
 		public function getVideoData($video_id) {
-			$query = $this->db->query("SELECT * from `" . DB_PREFIX . "videolist` WHERE `video_id`='" . $this->db->escape($video_id) . "'");
+			$query = $this->db->query("SELECT * from `" . DB_PREFIX . "videolist` WHERE `video_id`='" . $this->db->escape($video_id) . "' LIMIT 1");
 			return $query;
 		}
 		public function getVideoViews($id, $views) {
@@ -35,11 +35,14 @@
 		public function shareVideo($user_id, $video_id, $start = 0, $friends = array()) {
 			if($friends) {
 				foreach($friends as $friend_id) {
-					$query = $this->db->query("SELECT s.id,s.video_id,s.friend_id,s.user_id FROM `" . DB_PREFIX . "share` s LEFT JOIN `" . DB_PREFIX . "videolist` v ON(v.id=s.video_id) WHERE v.video_id='" . $this->db->escape($video_id) . "' LIMIT 1");
+					$query = $this->db->query("SELECT s.id,s.video_id,s.friend_id,s.user_id FROM `" . DB_PREFIX . "share` s LEFT JOIN `" . DB_PREFIX . "videolist` v ON(v.id=s.video_id) WHERE v.video_id='" . $this->db->escape($video_id) . "' AND s.user_id=$friend_id AND s.friend_id=$user_id LIMIT 1");
 					if($query->num_rows)
 						$this->db->query("UPDATE `" . DB_PREFIX . "share` SET `status`='0', `start`=" . (int)$start . " WHERE `id`=" . $query->row["id"]);
-					else
-						$this->db->query("INSERT INTO `" . DB_PREFIX . "share` SET `user_id`=" . (int)$friend_id . ", `friend_id`=$user_id, `start`=" . (int)$start . " `video_id`=(SELECT `id` FROM `" . DB_PREFIX . "videolist` WHERE `video_id`='" . $this->db->escape($video_id) . "')");
+					else {
+						$video = $this->db->query("SELECT `id` FROM `" . DB_PREFIX . "videolist` WHERE `video_id`='" . $this->db->escape($video_id) . "'");
+						echo "INSERT INTO `" . DB_PREFIX . "share` SET `user_id`=" . (int)$friend_id . ", `friend_id`=$user_id, `start`=" . (int)$start . ", `video_id`='" . $video->row["id"] . "', `created_at`=NOW()" .'<br />';
+						$this->db->query("INSERT INTO `" . DB_PREFIX . "share` SET `user_id`=" . (int)$friend_id . ", `friend_id`=$user_id, `start`=" . (int)$start . ", `video_id`='" . $video->row["id"] . "', `created_at`=NOW()");
+					}
 				}
 			}
 		}

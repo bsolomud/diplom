@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Mar 29, 2014 at 10:48 AM
+-- Generation Time: Mar 30, 2014 at 08:47 AM
 -- Server version: 5.5.35
 -- PHP Version: 5.3.10-1ubuntu3.10
 
@@ -95,7 +95,9 @@ INSERT INTO `dp_setting` (`setting_id`, `group`, `key`, `value`, `serialized`) V
 CREATE TABLE IF NOT EXISTS `dp_share` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `user_id` int(11) NOT NULL,
+  `friend_id` int(11) NOT NULL,
   `video_id` int(11) NOT NULL,
+  `start` int(11) NOT NULL,
   `created_at` datetime NOT NULL,
   `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' ON UPDATE CURRENT_TIMESTAMP,
   `status` enum('1','0') NOT NULL DEFAULT '0',
@@ -196,7 +198,7 @@ CREATE TABLE IF NOT EXISTS `dp_videolist` (
 --
 
 INSERT INTO `dp_videolist` (`id`, `video_id`, `name`, `description`, `thumbnail`, `published_at`, `views`, `created_at`, `updated_at`) VALUES
-(1, 'W-TE_Ys4iwM', 'One Direction - Story of My Life', 'The new album Midnight Memories featuring Story of My Life is out now! Amazon: http://smarturl.it/MidnightMemoriesAmzd iTunes: http://t.co/LKM4OKwGwo ...', 'https://i.ytimg.com/vi/W-TE_Ys4iwM/mqdefault.jpg', '2013-11-03 04:11:02', 17, '2014-03-25 10:21:31', '2014-03-29 17:47:23'),
+(1, 'W-TE_Ys4iwM', 'One Direction - Story of My Life', 'The new album Midnight Memories featuring Story of My Life is out now! Amazon: http://smarturl.it/MidnightMemoriesAmzd iTunes: http://t.co/LKM4OKwGwo ...', 'https://i.ytimg.com/vi/W-TE_Ys4iwM/mqdefault.jpg', '2013-11-03 04:11:02', 88, '2014-03-25 10:21:31', '2014-03-30 15:47:17'),
 (2, 'rJYcmq__nDM', 'Rihanna - Rehab ft. Justin Timberlake', 'Music video by Rihanna performing Rehab. YouTube view counts pre-VEVO: 19591123. (C) 2007 The Island Def Jam Music Group.', 'https://i.ytimg.com/vi/rJYcmq__nDM/mqdefault.jpg', '2009-12-14 03:12:13', 0, '2014-03-25 10:21:31', '0000-00-00 00:00:00'),
 (3, 'rp4UwPZfRis', 'Rihanna - Unfaithful', 'Music video by Rihanna performing Unfaithful. (C) 2006 The Island Def Jam Music Group #VEVOCertified on Feb. 15, 2012. http://vevo.com/certified http://youtu.', 'https://i.ytimg.com/vi/rp4UwPZfRis/mqdefault.jpg', '2009-11-23 08:11:45', 0, '2014-03-25 10:21:31', '0000-00-00 00:00:00'),
 (4, 'mO1QBTG6EXs', 'THE LEGEND OF ZELDA RAP [MUSIC VIDEO]', 'WATCH BLOOPERS & MORE: http://bit.ly/ZELDAxtras DOWNLOAD THE SONG ON ITUNES: http://smo.sh/13NrBp8 DOWNLOAD UNCENSORED SONG: ...', 'https://i.ytimg.com/vi/mO1QBTG6EXs/mqdefault.jpg', '2011-11-18 09:11:54', 0, '2014-03-25 10:21:31', '0000-00-00 00:00:00'),
@@ -205,7 +207,7 @@ INSERT INTO `dp_videolist` (`id`, `video_id`, `name`, `description`, `thumbnail`
 (7, 'tGpLHj-MVtk', 'FIRETRUCK! (Official Music Video)', 'BLOOPERS: http://bit.ly/FiretruckBloopers GET THE SONG: http://smo.sh/WMZv7l MILKSHAKE MUSIC VIDEO: http://bit.ly/MilkyMilkshake CHECK OUT THIS ...', 'https://i.ytimg.com/vi/tGpLHj-MVtk/mqdefault.jpg', '2010-08-27 06:08:03', 0, '2014-03-25 10:21:31', '0000-00-00 00:00:00'),
 (8, '7zxXAtmmLLc', 'My Last Days: Zach Sobiech "Clouds" Celebrity Music Video', 'Zach Sobiech is 17 years old and diagnosed with osteosarcoma, a rare form of bone cancer that takes the lives of a large percent of its childhood victims. Gi...', 'https://i.ytimg.com/vi/7zxXAtmmLLc/mqdefault.jpg', '2013-05-06 10:05:09', 0, '2014-03-25 10:21:31', '0000-00-00 00:00:00'),
 (9, 'pa14VNsdSYM', 'Rihanna - Only Girl (In The World)', 'Music video by Rihanna performing Only Girl (In The World). (C) 2010 The Island Def Jam Music Group #VEVOCertified on February 16, 2011.', 'https://i.ytimg.com/vi/pa14VNsdSYM/mqdefault.jpg', '2010-10-12 10:10:11', 0, '2014-03-25 10:21:31', '0000-00-00 00:00:00'),
-(10, 'bkx9kCdaaMg', 'One Direction - Midnight Memories', 'Pre-order the Midnight Memories single bundle including 3 live tracks now! iTunes: http://smarturl.it/MidnightMemoriesEP Taken from the album Midnight Memori ...', 'https://i.ytimg.com/vi/bkx9kCdaaMg/mqdefault.jpg', '2014-01-31 04:01:07', 0, '2014-03-25 10:21:31', '0000-00-00 00:00:00'),
+(10, 'bkx9kCdaaMg', 'One Direction - Midnight Memories', 'Pre-order the Midnight Memories single bundle including 3 live tracks now! iTunes: http://smarturl.it/MidnightMemoriesEP Taken from the album Midnight Memori ...', 'https://i.ytimg.com/vi/bkx9kCdaaMg/mqdefault.jpg', '2014-01-31 04:01:07', 2, '2014-03-25 10:21:31', '2014-03-30 14:06:40'),
 (11, 'v4Qv26IWyGU', 'Candy Crush The Movie (Official Fake Trailer)', 'Dedicated to all the Candy Crush and Other Phone Game addicts out there! CANDY CRUSH THE MOVIE ft. Candy Crush, Fruit Ninja, Angry Birds, Temple Run, ...', 'https://i.ytimg.com/vi/v4Qv26IWyGU/mqdefault.jpg', '2013-06-11 10:06:46', 0, '2014-03-25 10:21:31', '0000-00-00 00:00:00'),
 (12, '2Tvy_Pbe5NA', 'Epic Rap Battle: Nerd vs. Geek', 'Comment: Who won? iTUNES: http://bit.ly/NerdvsGeekSong Get the hookup on electronic deals: http://www.TigerDirect.com/RL FREE karaoke/instrumental ...', 'https://i.ytimg.com/vi/2Tvy_Pbe5NA/mqdefault.jpg', '2013-10-03 04:10:02', 0, '2014-03-25 10:21:31', '0000-00-00 00:00:00'),
 (13, 'y6Sxv-sUYtM', 'Pharrell Williams - Happy (Official Music Video)', 'Get Pharrell''s new album G I R L with 10 Brand New Tracks on iTunes: http://smarturl.it/GIRLitunes Get Pharrell''s new album G I R L with 10 Brand New Tracks ...', 'https://i.ytimg.com/vi/y6Sxv-sUYtM/mqdefault.jpg', '2013-11-22 05:11:00', 0, '2014-03-25 10:21:31', '0000-00-00 00:00:00'),

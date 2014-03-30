@@ -23,9 +23,9 @@
 			}
 			if($this->request->server["REQUEST_METHOD"] == "POST" && $this->validate()) {
 				$this->model_video_video->shareVideo($this->user->get("user_id"), $this->request->post["video"], $this->request->post["start"], $this->request->post["friends"]);
-				$this->session->data['success'] = $this->language->get("success_share");
-				$this->response->redurect($this->url->link("video/video", $url));
-			} elseif($this->error) {
+				$this->session->data['success'] = sprintf($this->language->get("success_share"), $this->model_video_video->getVideoData($this->request->post["video"])->row["name"]);
+				$this->response->redirect($this->url->link("video/video", "video=" . $this->request->post["video"] . "&start=" . $this->request->post["start"]));
+			} elseif($this->error) {echo 'y';exit;
 				$this->session->data["warning"] = $this->error["warning"];
 				$this->response->redirect($this->url->link("common/home", $url));
 			}
