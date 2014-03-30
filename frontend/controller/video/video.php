@@ -4,14 +4,17 @@
 			$this->load->language("video/video");
 			$this->load->model("video/video");
 
+			$url = '';
+			if(isset($this->request->get["page"]))
+				$url .= '&page=' . $this->request->get["page"];
 			if(!isset($this->request->get['video'])) {
 				$this->session->data['notice'] = $this->language->get("error_video");
-				$this->response->redirect($this->url->link('common/home'));
+				$this->response->redirect($this->url->link('common/home', $url));
 			}
 			$video = $this->model_video_video->getVideoData($this->request->get['video']);
 			if(!$video->num_rows) {
 				$this->session->data['warning'] = $this->language->get("error_not_found");
-				$this->response->redirect($this->url->link('common/home'));
+				$this->response->redirect($this->url->link('common/home', $url));
 			}
 			$start = isset($this->request->get['start']) ? $this->request->get['start'] : 0;
 			$this->document->setTitle(sprintf($this->language->get('title_format'), $video->row['name'], $this->config->get('config_title')));
@@ -29,7 +32,7 @@
 				// Load additional library
 				$this->load->model("user/user");
 				$this->data["share"] = array(
-					"action"	=> $this->url->link("video/share"),
+					"action"	=> $this->url->link("video/share", $url),
 					"user_id"	=> $this->user->get("user_id"),
 					"text"		=> $this->language->get("text_share"),
 					"submit"	=> $this->language->get("button_submit")

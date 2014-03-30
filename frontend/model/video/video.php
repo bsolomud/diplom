@@ -28,5 +28,29 @@
 			$this->db->query("UPDATE `" . DB_PREFIX . "videolist` SET `views`=$views WHERE `id`=$id");
 			return $views;
 		}
+		public function videoExists($video_id) {
+			$query = $this->db->query("SELECT `id` FROM `" . DB_PREFIX . "videolist` WHERE `video_id`='" . $this->db->escape($video_id) . "' LIMIT 1");
+			return $query->num_rows;
+		}
+		public function shareVideo($user_id, $video_id, $start = 0, $friends = array()) {
+			if($friends) {
+				foreach($friends as $friend_id) {
+					$query = $this->db->query("SELECT s.id,s.video_id,s.friend_id,s.user_id FROM `" . DB_PREFIX . "share` s LEFT JOIN `" . DB_PREFIX . "videolist` v ON(v.id=s.video_id) WHERE v.video_id='" . $this->db->escape($video_id) . "' LIMIT 1");
+					if($query->num_rows)
+						$this->db->query("UPDATE `" . DB_PREFIX . "share` SET `status`='0', `start`=" . (int)$start . " WHERE `id`=" . $query->row["id"]);
+					else
+						$this->db->query("INSERT INTO `" . DB_PREFIX . "share` SET `user_id`=" . (int)$friend_id . ", `friend_id`=$user_id, `start`=" . (int)$start . " `video_id`=(SELECT `id` FROM `" . DB_PREFIX . "videolist` WHERE `video_id`='" . $this->db->escape($video_id) . "')");
+				}
+			}
+		}
+		public function getSharedVideo($user_id, $page, $limit) {
+			$start = $page - 1;
+			$query = $this->db->query("SELECT v.video_id,s.created_at,s.updated_at,s.status,v.name,u.username,v.description,v.thumbnail,s.friend_id FROM `" . DB_PREFIX . "share` s LEFT JOIN `" . DB_PREFIX . "videolist` v ON (s.video_id=v.id) LEFT JOIN `" . DB_PREFIX . "user` u ON (s.friend_id=u.user_id) WHERE s.user_id=$user_id ORDER BY s.status,s.created_at,s.updated_at DESC LIMIT $start,$limit");
+			return $query;
+		}
+		public function getSharedTotal($user_id) {
+			$query = $this->db->query("SELECT COUNT(*) as total FROM `" . DB_PREFIX . "share` WHERE `user_id`=$user_id");
+			return $query->row["total"];
+		}
 	}
 ?>

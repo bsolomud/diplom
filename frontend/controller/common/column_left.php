@@ -14,6 +14,10 @@
 			);
 			if($this->user->signedIn()) {
 				$this->data['navigation'][] = array(
+					"text"	=> $this->language->get("text_share"),
+					"href"	=> $this->url->link("video/share"),
+				);
+				$this->data['navigation'][] = array(
 					"text"	=> $this->language->get("text_account"),
 					"href"	=> $this->url->link("account/account"),
 				);

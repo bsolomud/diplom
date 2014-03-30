@@ -7,10 +7,12 @@ class ControllerCommonHome extends Controller {
 		// Setup document data
 		$this->document->setTitle($this->config->get('config_title'));
 		$this->document->setDescription($this->config->get('config_meta_description'));
-
-		if(isset($this->request->get['page']))
+		
+		$url = '';
+		if(isset($this->request->get['page'])) {
 			$page = $this->request->get['page'];
-		else
+			$url .= '&page=' . $page;
+		} else
 			$page = 1;
 
 		$storedVideolist = $this->model_video_video->getVideolist($page, $this->config->get('config_video_limit'));
@@ -26,7 +28,7 @@ class ControllerCommonHome extends Controller {
 					'name'			=> $row["name"],
 					'description'	=> $row["description"],
 					'publishedAt'	=> date($this->language->get('publish_format'), strtotime($row["published_at"])),
-					'href'			=> $this->url->link('video/video', 'video=' . $row["video_id"]),
+					'href'			=> $this->url->link('video/video', 'video=' . $row["video_id"] . $url),
 					'views'			=> $row['views'],
 					'thumbnail'		=> $row['thumbnail']
 				);
@@ -38,7 +40,7 @@ class ControllerCommonHome extends Controller {
 					'name'			=> $video["snippet"]["title"],
 					'description'	=> $video["snippet"]["description"],
 					'publishedAt'	=> date($this->language->get('publish_format'), strtotime($video["snippet"]["publishedAt"])),
-					'href'			=> $this->url->link('video/video', 'video=' . $video['id']["videoId"])
+					'href'			=> $this->url->link('video/video', 'video=' . $video['id']["videoId"] . $url)
 				);
 				$this->data['results'][$video['id']["videoId"]]["thumbnail"] = $video['snippet']['thumbnails']['medium']['url'];
 				$this->model_video_video->saveVideoIfNotExists($video['id']["videoId"], $video);
