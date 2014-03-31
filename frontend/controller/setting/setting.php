@@ -15,18 +15,24 @@
 
 			$this->document->setTitle($this->language->get("heading_title"));
 
-			$this->data["settings"] = array();
 			$this->data["language"] = array();
-			$this->data["language"]["config"] = $this->language->get("text_config");
+			// Configs
 			$configs = $this->model_setting_setting->getSetting("config");
+			$this->data["config"] = array();
+			$this->data["language"]["configs"] = $this->language->get("tab_configs");
 			foreach($configs->rows as $config) {
-				$this->data["settings"]["config"][$config["key"]] = ($config["serialized"]) ? unserialize($config["value"]) : $config["value"];
+				$this->data["config"][$config["key"]] = ($config["serialized"]) ? unserialize($config["value"]) : $config["value"];
 				$this->data["language"][$config["key"]] = $this->language->get("field_" . $config["key"]);
 			}
-			$this->data["post"] = array();
-			if(!empty($this->request->post))
-				foreach($this->request->post as $key => $value)
-					$this->data["post"][$key] = $value;
+
+			// users
+			$this->load->model("user/user");
+			$this->data["language"]["users"] = $this->language->get("tab_users");
+			$users = $this->model_user_user->getUsersList($this->user->get("user_id"));
+			$this->data["users"] = array();
+			foreach($users->rows as $user) {
+				
+			}
 
 			// Rendering...
 			if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/setting/setting.tpl'))

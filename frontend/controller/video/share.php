@@ -30,6 +30,8 @@
 				$this->response->redirect($this->url->link("common/home", $url));
 			}
 
+			$this->document->setTitle($this->language->get("heading_title"));
+
 			$shared = $this->model_video_video->getSharedVideo($this->user->get("user_id"), $page, $this->config->get("config_video_limit"));
 			$shared_total = $this->model_video_video->getSharedTotal($this->user->get("user_id"));
 			$this->data["videolist"] = array();
