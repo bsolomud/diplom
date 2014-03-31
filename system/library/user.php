@@ -1,16 +1,17 @@
 <?php
 class User {
-	private $data;
+	protected $data = array();
 	private $permission = array();
 
 	public function __construct($registry) {
 		$this->db = $registry->get('db');
 		$this->request = $registry->get('request');
 		$this->session = $registry->get('session');
-		
+
 		if (isset($this->session->data['user_id'])) {
 			$user_query = $this->db->query("SELECT * FROM " . DB_PREFIX . "user WHERE user_id = '" . (int)$this->session->data['user_id'] . "' AND status = '1'");
-
+			$this->data["username"] = $user_query->row["username"];
+			$this->data["email"] = $user_query->row["email"];
 			if ($user_query->num_rows) {
 				foreach($user_query->row as $key => $value)
 					$this->data[$key] = $value;

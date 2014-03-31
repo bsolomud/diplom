@@ -35,6 +35,7 @@ class ControllerCommonHeader extends Controller {
 			$this->data['logo'] = $server . 'image/' . $this->config->get('config_logo');
 		else
 			$this->data['logo'] = '';
+
 		// Setup page data
 		$this->data['action'] = $this->url->link('video/search');
 		$this->data['text_search'] = $this->language->get('text_search');
@@ -42,6 +43,7 @@ class ControllerCommonHeader extends Controller {
 		$this->data['text_login'] = $this->language->get('text_login');
 		$this->data['redirect'] = $this->url->link((isset($this->request->get['route'])) ? $this->request->get['route'] : 'common/home');
 		$this->data['login_action'] = $this->url->link('common/login');
+		$this->data["text_greatings"] = null;
 		// If user is signed in
 		if($this->user->signedIn()) {
 			$this->data['navigation'] = array(
@@ -54,6 +56,7 @@ class ControllerCommonHeader extends Controller {
 					"href"	=> $this->url->link("account/account")
 				)
 			);
+			$this->data["text_greatings"] = sprintf($this->language->get("text_greatings"), $this->user->get("username"));
 		} else {
 			$this->data['navigation'] = array(
 				array(

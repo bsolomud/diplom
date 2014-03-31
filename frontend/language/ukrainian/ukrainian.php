@@ -7,6 +7,7 @@ $_['date_format_long']      = 'l dS F Y';
 $_['time_format']           = 'h:i:s A';
 $_['title_format']			= '%1s | %2s';
 $_['publish_format']		= 'd/m/Y';
+$_['share_format']			= 'h:m d/m/Y';
 $_['decimal_point']         = '.';
 $_['thousand_point']        = ',';
 

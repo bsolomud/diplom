@@ -6,4 +6,5 @@ $_['text_signout'] = 'Вийти';
 $_['text_signin'] = 'Авторизація';
 $_['text_account'] = 'Кабінет';
 $_['text_search'] = 'Пошук відео...';
+$_["text_greatings"] = 'Вітаємо, <span>%s</span>.';
 ?>

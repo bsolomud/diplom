@@ -82,6 +82,7 @@
                 <input type="submit" value="" />
             </form>
         </div>
+        <?php if($text_greatings) : ?><div class="greatings"><?php echo $text_greatings; ?></div><?php endif; ?>
         <div class="account-conteiner">
             <ul id="account-bar">
                 <?php foreach($navigation as $obj) : ?>

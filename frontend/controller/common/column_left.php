@@ -21,9 +21,9 @@
 					"text"	=> $this->language->get("text_account"),
 					"href"	=> $this->url->link("account/account"),
 				);
-				if($this->user->hasPermission("modify", "setting/setting")) {
+				if($this->user->hasPermission("modify", "video/video")) {
 					$this->data['navigation'][] = array(
-						"text"	=> $this->langauge->get("text_setting"),
+						"text"	=> $this->language->get("text_setting"),
 						"href"	=> $this->url->link("setting/setting"),
 					);
 				}

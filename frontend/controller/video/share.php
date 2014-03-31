@@ -36,9 +36,9 @@
 			if($shared->num_rows) {
 				foreach($shared->rows as $row) {
 					$this->data["videolist"][$row["video_id"]] = array(
-						"title"		=> $row["title"],
+						"title"		=> $row["name"],
 						"thumbnail"	=> $row["thumbnail"],
-						"shared"	=> preg_match("/[0- ]{4,}/i", $row["updated_at"]) ? $row["created_at"] : $row["updated_at"],
+						"shared"	=> date($this->language->get("share_format"), strtotime(preg_match("/^0{4}-0{2}-0{2} 0{2}:0{2}:0{2}$/i", $row["updated_at"]) ? $row["created_at"] : $row["updated_at"])),
 						"href"		=> $this->url->link("video/video", "video=" . $row["video_id"] . (($row["start"] > 0) ? '&start=' . $row["start"] : "") . $url),
 						"friend"	=> $row["username"]
 					);

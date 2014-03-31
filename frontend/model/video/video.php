@@ -48,7 +48,7 @@
 		}
 		public function getSharedVideo($user_id, $page, $limit) {
 			$start = $page - 1;
-			$query = $this->db->query("SELECT v.video_id,s.created_at,s.updated_at,s.status,v.name,u.username,v.description,v.thumbnail,s.friend_id FROM `" . DB_PREFIX . "share` s LEFT JOIN `" . DB_PREFIX . "videolist` v ON (s.video_id=v.id) LEFT JOIN `" . DB_PREFIX . "user` u ON (s.friend_id=u.user_id) WHERE s.user_id=$user_id ORDER BY s.status,s.created_at,s.updated_at DESC LIMIT $start,$limit");
+			$query = $this->db->query("SELECT v.video_id,s.created_at,s.start,s.updated_at,s.status,v.name,u.username,v.description,v.thumbnail,s.friend_id FROM `" . DB_PREFIX . "share` s LEFT JOIN `" . DB_PREFIX . "videolist` v ON (s.video_id=v.id) LEFT JOIN `" . DB_PREFIX . "user` u ON (s.friend_id=u.user_id) WHERE s.user_id=$user_id ORDER BY s.status,s.created_at,s.updated_at DESC LIMIT $start,$limit");
 			return $query;
 		}
 		public function getSharedTotal($user_id) {
