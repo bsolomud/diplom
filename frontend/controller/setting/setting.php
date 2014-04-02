@@ -4,6 +4,7 @@
 		public function index() {
 			$this->language->load("setting/setting");
 			$this->load->model("setting/setting");
+			$this->load->model("tool/image");
 
 			if(!$this->user->hasPermission("modify", "common/header"))
 				$this->response->redirect($this->url->link("common/home"));
@@ -20,7 +21,22 @@
 				0	=> $this->language->get("text_0"),
 				1	=> $this->language->get("text_1")
 			);
-
+			$this->data["connections"] = array(
+				"NONSSL"	=> $this->language->get("text_nonssl"),
+				"SSL"		=> $this->language->get("text_ssl")
+			);
+			foreach(glob(DIR_TEMPLATE . '*') as $path) {
+				$name = basename($path);
+				$this->data["templates"][$name] = $this->language->get("text_" . $name);
+			}
+			$this->data["action"] = $this->url->link("setting/setting");
+			$languages = $this->model_setting_setting->getLanguages();
+			foreach($languages->rows as $record) {
+				$this->data["languages"][$record["code"]] = $record["name"];
+			}
+			$this->data["filemanager"] = $this->url->link("common/filemanager/image");
+			$this->data["text_image_manager"] = $this->language->get("text_image_manager");
+			$this->data["submit"] = $this->language->get("text_submit");
 			$this->data["language"] = array();
 			// Configs
 			$this->data["tabs"]["config"] = $this->language->get("tab_config");
@@ -47,12 +63,14 @@
 			);
 			$this->data["config_icon"] = array(
 				"text"	=> $this->language->get("field_icon"),
-				"value"	=> isset($this->request->post["config_icon"]) ? $this->config->get("config_icon") : $this->config->get("config_icon"),
+				"value"	=> isset($this->request->post["config_icon"]) ? $this->config->get("config_icon") : $this->config->get("config_icon")
 			);
+			$this->data["config_icon"]["preview"] = file_exists(DIR_IMAGE . $this->data["config_icon"]["value"]) ? HTTP_IMAGE . $this->data["config_icon"]["value"] : HTTP_IMAGE . "no_image.jpg";
 			$this->data["config_logo"] = array(
 				"text"	=> $this->language->get("field_logo"),
-				"value"	=> isset($this->request->post["config_logo"]) ? $this->request->post["config_logo"] : $this->config->get("config_logo"),
+				"value"	=> isset($this->request->post["config_logo"]) ? $this->request->post["config_logo"] : $this->config->get("config_logo")
 			);
+			$this->data["config_logo"]["preview"] = file_exists(DIR_IMAGE . $this->data["config_logo"]["value"]) ? HTTP_IMAGE . $this->data["config_logo"]["value"] : HTTP_IMAGE . "no_image.jpg";
 			$this->data["connection"] = array(
 				"text"	=> $this->language->get("field_connection"),
 				"value"	=> isset($this->request->post["connection"]) ? $this->request->post["connection"] : $this->config->get("connection"),
@@ -90,8 +108,7 @@
 			$this->data["tabs"]["users"] = $this->language->get("tab_users");
 
 			if($this->error) {
-				$this->session->data["warning"] = $this->error["warning"];
-				unset($this->error["warning"]);
+				$this->session->data["warning"] = $this->language->get("error_form");
 				foreach($this->error as $key => $value)
 					$this->data["error"][$key] = $value;
 			}
@@ -106,6 +123,18 @@
 		}
 
 		private function validate() {
+			if(!isset($this->request->post["config_title"]) || !preg_match("/[^ ]{5,}/i", $this->request->post["config_title"]))
+				$this->error["config_title"] = $this->language->get("error_config_title");
+			if(!isset($this->request->post["config_name"]) || !preg_match("/[^ ]{5,}/i", $this->request->post["config_name"]))
+				$this->error["config_name"] = $this->language->get("error_config_name");
+			if(!isset($this->request->post["config_email"]) || !preg_match("/[\w-]+@\w+\.[a-z]{2,4}(\.[a-z]{2,4})?/i", $this->request->post["config_email"]))
+				$this->error["config_email"] = $this->language->get("error_config_email");
+			if(!isset($this->request->post["config_error_filename"]) || !preg_match("/\w+(\.[a-z]+)?/i", $this->request->post["config_error_filename"]))
+				$this->error["config_error_filename"] = $this->language->get("error_config_error_filename");
+			if(!isset($this->request->post["config_url"]) || !preg_match("/^http:\/\/.+/i", $this->request->post["config_url"]))
+				$this->error["config_url"] = $this->language->get("error_config_url");
+			if(!isset($this->request->post["config_video_limit"]) || !preg_match("/\d+/i", $this->request->post["config_video_limit"]))
+				$this->error["config_video_limit"] = $this->language->get("error_config_video_limit");
 
 			return ($this->error) ? false : true;
 		}

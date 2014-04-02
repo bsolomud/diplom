@@ -1,9 +1,10 @@
 <?php
 // HTTP
 define('HTTP_SERVER', 'http://your.host/');
-
+define("HTTP_IMAGE", "http://your.host/image/");
 // HTTPS
 define('HTTPS_SERVER', 'https://you.host/');
+define('HTTPs_IMAGE', 'https://you.host/image/');
 
 // DIR
 define('DIR_SEP', DIRECTORY_SEPARATOR);
